@@ -67,8 +67,27 @@ public class GlobalState extends Application{
         switch (weatherID){
             default :
                 return "";
-            case 800 :
-                return "Temps clair";
+            case 200 :
+                return "Orage avec faibles précipitations";
+            case 201 :
+                return "Orage avec pluie";
+            case 202 :
+                return "Orage avec fortes précipitations";
+            case 210 :
+                return "Orage faible";
+            case 211 :
+                return "Orage";
+            case 212 :
+                return "Orage violent";
+            //à vérifier
+            case 221 :
+                return "Orage loqueteux";
+            case 230 :
+                return "Orage avec bruine légère";
+            case 231 :
+                return "Orage avec bruine";
+            case 232 :
+                return "Orage avec bruine verglacante";
         }
     }
 
