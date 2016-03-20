@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Travel Pocket</string>
+    <string name="google_app_id">arctic-signer-123222</string>
+    <string name="retour_text"><![CDATA[< Retour]]></string>
+</resources>
