@@ -47,9 +47,6 @@ public class MainActivity extends Activity implements View.OnClickListener   {
         setContentView(R.layout.activity_main);
         gs = (GlobalState) getApplication();
 
-        //gs.alerter("onCreate");
-
-
         rvCities=(RecyclerView)findViewById(R.id.rvCities);
 
         llm = new LinearLayoutManager(this);
