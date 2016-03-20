@@ -29,8 +29,6 @@ public class MainActivity extends Activity implements View.OnClickListener   {
 
     GlobalState gs;
 
-    ImageButton btnAdd;
-
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     private RecyclerView rvCities;
     private StaggeredGridLayoutManager m;
