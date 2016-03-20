@@ -11,7 +11,7 @@ public class City {
     String picture;
     String description;
 
-    //Constructeur
+    // Constructeur
     City(String pays, String name, String description, String currentWeather, String picture) {
         this.pays = pays;
         this.description = description;
