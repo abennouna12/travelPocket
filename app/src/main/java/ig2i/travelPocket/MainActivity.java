@@ -31,21 +31,19 @@ public class MainActivity extends Activity implements View.OnClickListener   {
 
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     private RecyclerView rvCities;
-    private StaggeredGridLayoutManager m;
-    String image;
     String city;
     String pays;
-    String description;
     String latlong;
-    String currentWeather;
     RVAdapter adapter;
     LinearLayoutManager llm;
+    MenuItem refreshBttn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gs = (GlobalState) getApplication();
+        refreshBttn = (MenuItem)findViewById(R.id.action_refresh);
 
         //gs.alerter("onCreate");
 
@@ -127,6 +125,10 @@ public class MainActivity extends Activity implements View.OnClickListener   {
                     // TODO: Handle the error.
                 }
                 break;
+            case R.id.action_refresh :
+                //refreshBttn.setEnabled(false);
+                updateEverything();
+                break;
 
         }
 
@@ -156,7 +158,7 @@ public class MainActivity extends Activity implements View.OnClickListener   {
                 String[] address = place.getAddress().toString().split(",");
                 pays = address[ address.length - 1 ].toUpperCase().substring(1);
                 if(!(gs.latlongs.contains(latlong))) {
-                    WeatherInfo w = new WeatherInfo(latlong, this, city, pays);
+                    WeatherInfo w = new WeatherInfo("add",latlong, this, city, pays);
                     w.execute();
                 } else {
                     gs.alerter(city + ", " + pays + " existe déjà");
@@ -205,12 +207,42 @@ public class MainActivity extends Activity implements View.OnClickListener   {
 
                     @Override
                     public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
-                     //
+                        for (int position : reverseSortedPositions) {
+
+                        }
                     }
                 });
 
         rvCities.addOnItemTouchListener(swipeTouchListener);
     }
+
+    public void updateWeather(City c) {
+        latlong = c.latitude + "," + c.longitude;
+        city = c.name;
+        pays = c.pays;
+        WeatherInfo w = new WeatherInfo("update",latlong, this, city, pays);
+        w.execute();
+    }
+
+    public void update (City result) {
+        City old = new City();
+        for(City c : gs.cities) {
+            if(c.latitude.equals(result.latitude)) {
+                old = c;
+            }
+        }
+        old.update(result);
+        majAdapter();
+    }
+
+    public void updateEverything(){
+        for(City c : gs.cities) {
+            updateWeather(c);
+        }
+        //refreshBttn.setEnabled(true);
+    }
+
+
 
 
 }

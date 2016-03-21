@@ -29,6 +29,18 @@ public class City {
 
     }
 
+    void update(City c)
+    {
+        pays = c.pays;
+        name = c.name;
+        currentWeather = c.currentWeather;
+        //picture = c.picture;
+        description = c.description;
+        latitude = c.latitude;
+        longitude = c.longitude;
+        daily = c.daily;
+    }
+
 
 
 }
