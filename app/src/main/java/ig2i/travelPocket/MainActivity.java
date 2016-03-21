@@ -152,7 +152,7 @@ public class MainActivity extends Activity implements View.OnClickListener   {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 Double lat = place.getLatLng().latitude;
                 Double lon = place.getLatLng().longitude;
-                latlong = "lat=" + lat + "&lon=" + lon;
+                latlong = lat + "," + lon;
                 city = place.getName().toString();
                 String[] address = place.getAddress().toString().split(",");
                 pays = address[ address.length - 1 ].toUpperCase().substring(1);

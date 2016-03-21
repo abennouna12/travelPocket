@@ -19,6 +19,8 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class JSONParser {
 
     // Classe permettant de parser un JSON
@@ -46,25 +48,25 @@ public class JSONParser {
 
         try {
             // defaultHttpClient
-            URL url = new URL(requesturl.replace(" ","%20"));
+            URL url = new URL(requesturl);
             HttpParams httpParameters = new BasicHttpParams();
 
             HttpConnectionParams.setConnectionTimeout(httpParameters, timeout1);
             HttpConnectionParams.setSoTimeout(httpParameters, timeout2);
-            HttpURLConnection connection = (HttpURLConnection) url
+            HttpsURLConnection connection = (HttpsURLConnection) url
                     .openConnection();
             connection.setConnectTimeout(20000);
-            connection.setRequestProperty("content-Type", "application/json");
-            connection.setRequestProperty("content-Language", "en-US");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
+            connection.setRequestProperty("Accept","*/*");
             connection.setDoInput(true);
-            connection.setDoOutput(true);
+            connection.setDoOutput(false);
             StringBuffer answer = new StringBuffer();
             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream()));
+                    connection.getInputStream(),"UTF-8"));
 
             String line;
             while ((line = reader.readLine()) != null) {
-                answer.append(line);
+                answer.append(line).append("\r\n");
             }
             reader.close();
             Log.d("SERVICE RESPONSE: ", answer.toString());
@@ -108,10 +110,10 @@ public class JSONParser {
             HttpURLConnection connection = (HttpURLConnection) url
                     .openConnection();
             connection.setConnectTimeout(20000);
-            connection.setRequestProperty("content-Type", "application/json");
-            connection.setRequestProperty("content-Language", "en-US");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
+            connection.setRequestProperty("Accept","*/*");
             connection.setDoInput(true);
-            connection.setDoOutput(true);
+            connection.setDoOutput(false);
             StringBuffer answer = new StringBuffer();
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));

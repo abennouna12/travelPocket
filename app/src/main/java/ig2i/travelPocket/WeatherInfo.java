@@ -37,10 +37,11 @@ public class WeatherInfo extends AsyncTask<Void, Void, List<String>> {
     protected List<String> doInBackground(Void... params) {
 
 
-        String WeatherURL = "http://api.openweathermap.org/data/2.5/weather?" +
+        String WeatherURL = "https://api.forecast.io/forecast/33e15e6da3e6f7c501e82e70461c5163/" +
                 latlong +
-                "&appid=b55ae43162650bcdf1c1e764d51ab083" +
-                "&units=metric";
+                "?lang=fr" +
+                "&units=si" +
+                "&exclude=minutely,hourly";
 
         String FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
                 "group_id=1463451%40N25&view_all=1" +
@@ -53,9 +54,14 @@ public class WeatherInfo extends AsyncTask<Void, Void, List<String>> {
         FlickrResult = FlickrParser.getJSONFromUrlFlickr(FlickrURL);
 
         try {
-            JSONObject main = WeatherResult.getJSONObject("main");
-            Double initWeather = new Double(main.getString("temp"));
-            int finalWeather = (int)Math.round(initWeather * 1) / 1;
+
+            String currentWeather  = WeatherResult
+                    .getJSONObject("currently")
+                    .getString("temperature");
+
+            Double initWeather = new Double(currentWeather);
+            int finalWeather = (int)Math.ceil(initWeather);
+
             result.add(Integer.toString(finalWeather));
 
             // Recuperer toutes les photos et ne choisir qu'une seule
@@ -71,15 +77,15 @@ public class WeatherInfo extends AsyncTask<Void, Void, List<String>> {
             obj = FlickrResult.getJSONObject("photos");
             int total = obj.getInt("total");
 
-            String description = WeatherResult
-                    .getJSONArray("weather")
-                    .getJSONObject(0)
-                    .getString("description");
+            String icon = WeatherResult
+                    .getJSONObject("currently")
+                    .getString("icon")
+                    .replace("-", " ");
 
-            int weatherID = WeatherResult
-                    .getJSONArray("weather")
-                    .getJSONObject(0)
-                    .getInt("id");
+            String description  = WeatherResult
+                    .getJSONObject("currently")
+                    .getString("summary");
+
 
             if (total>0) {
 
@@ -97,7 +103,7 @@ public class WeatherInfo extends AsyncTask<Void, Void, List<String>> {
 
                 FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
                         "group_id=1463451%40N25&view_all=1" +
-                        "&text=" + description +
+                        "&text=" + icon +
                         "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027" +
                         "&format=json";
 
@@ -117,7 +123,7 @@ public class WeatherInfo extends AsyncTask<Void, Void, List<String>> {
 
             result.add("https://farm" + farm + ".staticflickr.com/"
                     + server + "/" + id + "_" + secret + ".jpg");
-            result.add(gs.getWeatherDescription(weatherID));
+            result.add(description);
 
         } catch (JSONException e) {
             e.printStackTrace();

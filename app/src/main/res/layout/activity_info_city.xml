@@ -102,7 +102,7 @@
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_01d"
+                fresco:placeholderImage="@drawable/wi_clear_day"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 
@@ -149,7 +149,7 @@
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_01n"
+                fresco:placeholderImage="@drawable/wi_hail"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
     
@@ -196,7 +196,7 @@
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_13n"
+                fresco:placeholderImage="@drawable/wi_partly_cloudy_day"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
     
@@ -243,7 +243,7 @@
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_04n"
+                fresco:placeholderImage="@drawable/wi_sleet"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
     
@@ -290,7 +290,7 @@
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_11n"
+                fresco:placeholderImage="@drawable/wi_thunderstorm"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
     
