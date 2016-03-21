@@ -139,10 +139,9 @@ public class MainActivity extends Activity implements View.OnClickListener   {
         }
     }
 
-    public void setWeather(List<String> list){
-        this.currentWeather = list.get(0);
-        this.image = list.get(1);
-        this.description = list.get(2);
+    public void setWeather(City result){
+        gs.cities.add(result);
+        gs.latlongs.add(latlong);
     }
 
     @Override
@@ -157,7 +156,7 @@ public class MainActivity extends Activity implements View.OnClickListener   {
                 String[] address = place.getAddress().toString().split(",");
                 pays = address[ address.length - 1 ].toUpperCase().substring(1);
                 if(!(gs.latlongs.contains(latlong))) {
-                    WeatherInfo w = new WeatherInfo(latlong, this, city);
+                    WeatherInfo w = new WeatherInfo(latlong, this, city, pays);
                     w.execute();
                 } else {
                     gs.alerter(city + ", " + pays + " existe déjà");
@@ -175,8 +174,6 @@ public class MainActivity extends Activity implements View.OnClickListener   {
     }
 
     public void addCity() {
-        gs.cities.add(new City(pays, city, description, currentWeather + "°", image));
-        gs.latlongs.add(latlong);
         adapter.notifyItemInserted(gs.cities.size()-1);
         majAdapter();
     }

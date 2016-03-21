@@ -1,5 +1,7 @@
 package ig2i.travelPocket;
 
+import java.util.List;
+
 /**
  * Created by aBennouna on 11/03/2016.
  */
@@ -10,6 +12,9 @@ public class City {
     String currentWeather;
     String picture;
     String description;
+    String latitude;
+    String longitude;
+    List<weatherDetail> daily;
 
     // Constructeur
     City(String pays, String name, String description, String currentWeather, String picture) {
@@ -19,5 +24,11 @@ public class City {
         this.currentWeather = currentWeather;
         this.picture = picture;
     }
+
+    City(){
+
+    }
+
+
 
 }

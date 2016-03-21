@@ -62,32 +62,25 @@ public class GlobalState extends Application{
         return min + (int)(Math.random() * max);
     }
 
-    public String getWeatherDescription (int weatherID)
+    public String translateDay (String engDay)
     {
-        switch (weatherID){
+        switch (engDay){
             default :
                 return "";
-            case 200 :
-                return "Orage avec faibles précipitations";
-            case 201 :
-                return "Orage avec pluie";
-            case 202 :
-                return "Orage avec fortes précipitations";
-            case 210 :
-                return "Orage faible";
-            case 211 :
-                return "Orage";
-            case 212 :
-                return "Orage violent";
-            //à vérifier
-            case 221 :
-                return "Orage loqueteux";
-            case 230 :
-                return "Orage avec bruine légère";
-            case 231 :
-                return "Orage avec bruine";
-            case 232 :
-                return "Orage avec bruine verglacante";
+            case "Mon" :
+                return "Lun";
+            case "Tue" :
+                return "Mar";
+            case "Wed" :
+                return "Mer";
+            case "Thu" :
+                return "Jeu";
+            case "Fri" :
+                return "Ven";
+            case "Sat" :
+                return "Sam";
+            case "Sun" :
+                return "Dim";
         }
     }
 

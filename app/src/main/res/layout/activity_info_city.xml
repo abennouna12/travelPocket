@@ -10,71 +10,70 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ig2i.travelPocket.InfoCity">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:background="#3A3A3A"
-            android:layout_height="200dp"
-            android:id="@+id/relativeLayout">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#3A3A3A"
+        android:layout_height="200dp"
+        android:id="@+id/relativeLayout">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/picture"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:alpha="0.8"
-             />
+            android:alpha="0.4"
+            />
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/retour"
-                android:layout_width=" 40dp"
-                android:layout_height=" 40dp"
-                android:onClick="onClick"
-                android:clickable="true"
-                android:alpha="0.8"
-                fresco:placeholderImage="@drawable/ic_keyboard_arrow_left40dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/retour"
+            android:layout_width=" 40dp"
+            android:layout_height="40dp"
+            android:onClick="onClick"
+            android:clickable="true"
+            android:alpha="0.6"
+            fresco:placeholderImage="@drawable/ic_keyboard_arrow_left40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="19°"
-                android:layout_marginStart="20dp"
-                android:textSize="60sp"
-                android:fontFamily="sans-serif-light"
-                android:id="@+id/currentWeather"
-                android:textColor="@color/white"
-                android:textStyle="normal"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12°"
+            android:textSize="60sp"
+            android:fontFamily="sans-serif-bold"
+            android:id="@+id/currentWeather"
+            android:textColor="@color/white"
+            android:textStyle="normal"
+            android:layout_below="@+id/ville"
+            android:layout_centerHorizontal="true"/>
 
-            <me.grantland.widget.AutofitTextView
-                android:maxLines="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/temps"
-                android:text="Temps"
-                android:textStyle="italic"
-                android:singleLine="true"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:fontFamily="sans-serif-light"
-                android:layout_below="@+id/ville"
-                android:layout_alignStart="@+id/ville" />
+        <me.grantland.widget.AutofitTextView
+            android:maxLines="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/temps"
+            android:text="Temps"
+            android:textStyle="normal"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-light"
+            android:layout_below="@+id/currentWeather"
+            android:layout_centerHorizontal="true"/>
 
-            <me.grantland.widget.AutofitTextView
-                android:maxLines="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ville"
-                android:text="Ville"
-                android:singleLine="true"
-                android:textColor="@color/white"
-                android:textSize="35sp"
-                android:fontFamily="sans-serif-light"
-                android:textStyle="normal"
-                android:layout_below="@+id/currentWeather"
-                android:layout_alignStart="@+id/currentWeather" />
+        <me.grantland.widget.AutofitTextView
+            android:maxLines="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ville"
+            android:text="Ville"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="normal"
+            android:layout_below="@+id/retour"
+            android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
 
@@ -84,15 +83,15 @@
         android:layout_width="match_parent"
         android:background="@drawable/deg_weather_back"
         android:layout_height="120dp"
+        android:id="@+id/relativeLayout2"
         android:layout_below="@+id/relativeLayout"
-        android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayout2">
+        android:layout_alignParentStart="true">
 
 
         <RelativeLayout
             android:layout_width="70dp"
             android:layout_height="120dp"
-             
+
             android:id="@+id/relativeLayoutToday"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true">
@@ -102,7 +101,7 @@
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_clear_day"
+                fresco:placeholderImage="@drawable/wi_default"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 
@@ -111,21 +110,49 @@
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tempToday"
-                android:text="19°"
+                android:id="@+id/tempMaxToday"
+                android:text="13°"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/picToday"
-                android:layout_alignStart="@+id/dayToday" />
+                android:layout_toStartOf="@+id/sepToday" />
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sepToday"
+                android:text=" / "
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picToday"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.4"/>
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tempMinToday"
+                android:text="12°"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picToday"
+                android:layout_toEndOf="@+id/sepToday"
+                android:alpha="0.4" />
 
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayToday"
-                android:text="Lun"
+                android:text="Day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -139,189 +166,305 @@
         <RelativeLayout
             android:layout_width="70dp"
             android:layout_height="120dp"
-             
+
             android:id="@+id/relativeLayoutDay1"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/relativeLayoutToday">
-    
+
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/picDay1"
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_hail"
+                fresco:placeholderImage="@drawable/wi_default"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
-    
-    
+
+
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tempDay1"
-                android:text="19°"
+                android:id="@+id/tempMaxDay1"
+                android:text="13°"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/picDay1"
-                android:layout_alignStart="@+id/dayDay1" />
-    
+                android:layout_toStartOf="@+id/sepDay1" />
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sepDay1"
+                android:text=" / "
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picDay1"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.4"/>
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tempMinDay1"
+                android:text="12°"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picDay1"
+                android:layout_toEndOf="@+id/sepDay1"
+                android:alpha="0.4" />
+
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayDay1"
-                android:text="Lun"
+                android:text="Day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_above="@+id/picDay1"
-                android:layout_centerHorizontal="true" />
-    
-    
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="70dp"
             android:layout_height="120dp"
-             
+
             android:id="@+id/relativeLayoutDay2"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/relativeLayoutDay1">
-    
+
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/picDay2"
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_partly_cloudy_day"
+                fresco:placeholderImage="@drawable/wi_default"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
-    
-    
+
+
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tempDay2"
-                android:text="19°"
+                android:id="@+id/tempMaxDay2"
+                android:text="13°"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/picDay2"
-                android:layout_alignStart="@+id/dayDay2" />
-    
+                android:layout_toStartOf="@+id/sepDay2" />
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sepDay2"
+                android:text=" / "
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picDay2"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.4"/>
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tempMinDay2"
+                android:text="12°"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picDay2"
+                android:layout_toEndOf="@+id/sepDay2"
+                android:alpha="0.4" />
+
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayDay2"
-                android:text="Lun"
+                android:text="Day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_above="@+id/picDay2"
-                android:layout_centerHorizontal="true" />
-    
-    
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="70dp"
             android:layout_height="120dp"
-             
+
             android:id="@+id/relativeLayoutDay3"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/relativeLayoutDay2">
-    
+
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/picDay3"
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_sleet"
+                fresco:placeholderImage="@drawable/wi_default"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
-    
-    
+
+
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tempDay3"
-                android:text="19°"
+                android:id="@+id/tempMaxDay3"
+                android:text="13°"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/picDay3"
-                android:layout_alignStart="@+id/dayDay3" />
-    
+                android:layout_toStartOf="@+id/sepDay3" />
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sepDay3"
+                android:text=" / "
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picDay3"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.4"/>
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tempMinDay3"
+                android:text="12°"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picDay3"
+                android:layout_toEndOf="@+id/sepDay3"
+                android:alpha="0.4" />
+
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayDay3"
-                android:text="Lun"
+                android:text="Day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_above="@+id/picDay3"
-                android:layout_centerHorizontal="true" />
-    
-    
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="70dp"
             android:layout_height="120dp"
-             
+
             android:id="@+id/relativeLayoutDay4"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/relativeLayoutDay3">
-    
+
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/picDay4"
                 android:layout_width=" 40dp"
                 android:layout_height=" 40dp"
                 android:alpha="0.8"
-                fresco:placeholderImage="@drawable/wi_thunderstorm"
+                fresco:placeholderImage="@drawable/wi_default"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
-    
-    
+
+
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tempDay4"
-                android:text="19°"
+                android:id="@+id/tempMaxDay4"
+                android:text="13°"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/picDay4"
-                android:layout_alignStart="@+id/dayDay4" />
-    
+                android:layout_toStartOf="@+id/sepDay4" />
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sepDay4"
+                android:text=" / "
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picDay4"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.4"/>
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tempMinDay4"
+                android:text="12°"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/picDay4"
+                android:layout_toEndOf="@+id/sepDay4"
+                android:alpha="0.4" />
+
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayDay4"
-                android:text="Lun"
+                android:text="Day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_above="@+id/picDay4"
-                android:layout_centerHorizontal="true" />
-    
-    
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+
         </RelativeLayout>
 
 
