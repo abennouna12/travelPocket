@@ -2,14 +2,14 @@ package ig2i.travelPocket;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
@@ -19,10 +19,14 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class MainActivity extends Activity implements View.OnClickListener   {
@@ -34,9 +38,10 @@ public class MainActivity extends Activity implements View.OnClickListener   {
     String city;
     String pays;
     String latlong;
-    RVAdapter adapter;
+    RVAWeather adapter;
     LinearLayoutManager llm;
     MenuItem refreshBttn;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +49,6 @@ public class MainActivity extends Activity implements View.OnClickListener   {
         setContentView(R.layout.activity_main);
         gs = (GlobalState) getApplication();
         refreshBttn = (MenuItem)findViewById(R.id.action_refresh);
-
-        //gs.alerter("onCreate");
-
 
         rvCities=(RecyclerView)findViewById(R.id.rvCities);
 
@@ -56,15 +58,11 @@ public class MainActivity extends Activity implements View.OnClickListener   {
 
         Fresco.initialize(this);
 
-        if (gs.cities==null) {
-            gs.cities = new ArrayList<>();
-        }
-        if (gs.latlongs==null) {
-            gs.latlongs = new ArrayList<>();
-        }
+        gson = new Gson();
+
         initializeAdapter();
 
-        adapter.setOnItemClickListener(new RVAdapter
+        adapter.setOnItemClickListener(new RVAWeather
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -76,7 +74,32 @@ public class MainActivity extends Activity implements View.OnClickListener   {
 
         swipeTouchListener();
 
+        testParams();
 
+        updateEverything();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    public void testParams() {
+        if(gs.prefs.contains("placesType")) {
+
+            Set<String> params = gs.prefs.getStringSet("placesType", null);
+
+            String out = "";
+
+            if (params != null) {
+                for (String p : params
+                        ) {
+                    out = out + " " + p;
+                }
+            }
+
+            gs.alerter(out);
+        }
     }
 
     private void goToInfoCity(){
@@ -85,7 +108,7 @@ public class MainActivity extends Activity implements View.OnClickListener   {
     }
 
     private void initializeAdapter(){
-        adapter = new RVAdapter(gs.cities);
+        adapter = new RVAWeather(gs.cities);
         rvCities.setAdapter(adapter);
     }
 
@@ -135,6 +158,13 @@ public class MainActivity extends Activity implements View.OnClickListener   {
         return super.onOptionsItemSelected(item);
     }
 
+    public void updatePrefs() {
+        String json = gson.toJson(gs.cities);
+        gs.prefs.edit().putString("cities", json).commit();
+       // gs.prefs.edit().remove("latlongs").commit();
+        gs.prefs.edit().putStringSet("latlongs", gs.latlongs).commit();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -144,6 +174,7 @@ public class MainActivity extends Activity implements View.OnClickListener   {
     public void setWeather(City result){
         gs.cities.add(result);
         gs.latlongs.add(latlong);
+        updatePrefs();
     }
 
     @Override
@@ -158,7 +189,7 @@ public class MainActivity extends Activity implements View.OnClickListener   {
                 String[] address = place.getAddress().toString().split(",");
                 pays = address[ address.length - 1 ].toUpperCase().substring(1);
                 if(!(gs.latlongs.contains(latlong))) {
-                    WeatherInfo w = new WeatherInfo("add",latlong, this, city, pays);
+                    JSONWeatherInfo w = new JSONWeatherInfo("add",latlong, this, city, pays);
                     w.execute();
                 } else {
                     gs.alerter(city + ", " + pays + " existe déjà");
@@ -198,10 +229,12 @@ public class MainActivity extends Activity implements View.OnClickListener   {
                     @Override
                     public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
                         for (int position : reverseSortedPositions) {
+                            City c = gs.cities.get(position);
+                            gs.latlongs.remove(c.latitude + "," + c.longitude);
                             gs.cities.remove(position);
-                            gs.latlongs.remove(position);
                             adapter.notifyItemRemoved(position);
                         }
+                        updatePrefs();
                         adapter.notifyDataSetChanged();
                     }
 
@@ -220,7 +253,7 @@ public class MainActivity extends Activity implements View.OnClickListener   {
         latlong = c.latitude + "," + c.longitude;
         city = c.name;
         pays = c.pays;
-        WeatherInfo w = new WeatherInfo("update",latlong, this, city, pays);
+        JSONWeatherInfo w = new JSONWeatherInfo("update",latlong, this, city, pays);
         w.execute();
     }
 
@@ -239,10 +272,7 @@ public class MainActivity extends Activity implements View.OnClickListener   {
         for(City c : gs.cities) {
             updateWeather(c);
         }
-        //refreshBttn.setEnabled(true);
+        updatePrefs();
     }
-
-
-
 
 }

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -125,14 +126,14 @@ public class InfoCity extends Activity implements View.OnClickListener {
                 getIdentifier("@drawable/" +
                         gs.selectedCity.daily.get(4).icon, null, getPackageName())));
 
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.retour:
-                Intent toMainActivity = new Intent(this, MainActivity.class);
-                startActivity(toMainActivity);
+                this.finish();
                 break;
         }
     }

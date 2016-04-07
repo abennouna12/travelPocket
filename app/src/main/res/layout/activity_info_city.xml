@@ -470,5 +470,35 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_alignParentStart="true" >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SUGGESTIONS"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-bold"
+            android:id="@+id/suggestionText"
+            android:textColor="@color/black"
+            android:textStyle="normal"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rvSuggestions"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+
+
 
 </RelativeLayout>

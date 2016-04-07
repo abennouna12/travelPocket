@@ -1,8 +1,13 @@
 package ig2i.travelPocket;
 
         import android.app.Application;
+        import android.content.SharedPreferences;
+        import android.preference.PreferenceManager;
         import android.util.Log;
         import android.widget.Toast;
+
+        import com.google.gson.Gson;
+        import com.google.gson.reflect.TypeToken;
 
         import org.apache.http.HttpEntity;
         import org.apache.http.HttpResponse;
@@ -17,8 +22,11 @@ package ig2i.travelPocket;
         import java.io.IOException;
         import java.io.InputStreamReader;
         import java.io.UnsupportedEncodingException;
+        import java.lang.reflect.Type;
         import java.util.ArrayList;
+        import java.util.HashSet;
         import java.util.List;
+        import java.util.Set;
 
 
 /**
@@ -26,9 +34,13 @@ package ig2i.travelPocket;
  */
 public class GlobalState extends Application{
     static String cat = "MyTravelPocket";
+    SharedPreferences prefs;
+    Gson gson;
 
     @Override
     public void onCreate() {
+        gson = new Gson();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         loadCities();
         super.onCreate();
     }
@@ -41,18 +53,24 @@ public class GlobalState extends Application{
     }
 
     List<City> cities;
-    List<String> latlongs;
+    Set<String> latlongs;
     City selectedCity;
 
     // Fonction lancée au démarrage de l'application pour initialiser les villes
     // (A modifier pour enregistrer la liste dans les system parameters)
     public void loadCities() {
-        if (cities==null) {
+        if(prefs.contains("cities")) {
+            Type type = new TypeToken<List<City>>(){}.getType();
+            cities = gson.fromJson(prefs.getString("cities", ""), type);
+        } else {
             cities = new ArrayList<>();
         }
-        if (latlongs==null) {
-            latlongs = new ArrayList<>();
+        if(prefs.contains("latlongs")) {
+            latlongs = prefs.getStringSet("latlongs", null);
+        } else {
+            latlongs = new HashSet<>();
         }
+
     }
 
     // Fonction random permet de retourner un int entre deux valeurs prédéfinis

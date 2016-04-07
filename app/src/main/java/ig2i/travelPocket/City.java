@@ -14,7 +14,7 @@ public class City {
     String description;
     String latitude;
     String longitude;
-    List<weatherDetail> daily;
+    List<WeatherDetail> daily;
 
     // Constructeur
     City(String pays, String name, String description, String currentWeather, String picture) {
