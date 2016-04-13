@@ -11,4 +11,34 @@
         android:defaultValue="@array/empty_array"
         />
 
+    <CheckBoxPreference
+        android:title="Mise à jour des suggestions"
+        android:defaultValue="false"
+        android:summary="Cliquez ici si vous voulez mettre à jour les suggestions lors de chaque chargement de ville"
+        android:key="refreshSuggestions"
+        />
+
+    <CheckBoxPreference
+        android:title="Mise à jour des photos"
+        android:defaultValue="false"
+        android:summary="Cliquez ici si vous voulez mettre à jour les photos lors de chaque mise a jour"
+        android:key="updatePhoto"
+        />
+
+    <EditTextPreference
+        android:defaultValue="5"
+        android:inputType="number"
+        android:key="radius"
+        android:title="Distance de recherche"
+        android:summary="Définit la distance en kms en fonction de laquelle affiner les résultats de lieu. Le rayon maximum autorisé est de 50 kms"
+        />
+
+    <EditTextPreference
+        android:defaultValue="20"
+        android:inputType="number"
+        android:key="maxSuggestions"
+        android:title="Nombre maximum de suggestions"
+        android:summary="Definir ici le nombre maximum de suggestions"
+        />
+
 </PreferenceScreen>

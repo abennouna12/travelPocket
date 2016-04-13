@@ -9,19 +9,6 @@ package ig2i.travelPocket;
         import com.google.gson.Gson;
         import com.google.gson.reflect.TypeToken;
 
-        import org.apache.http.HttpEntity;
-        import org.apache.http.HttpResponse;
-        import org.apache.http.client.ClientProtocolException;
-        import org.apache.http.client.methods.HttpPost;
-        import org.apache.http.impl.client.DefaultHttpClient;
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
-
-        import java.io.BufferedReader;
-        import java.io.IOException;
-        import java.io.InputStreamReader;
-        import java.io.UnsupportedEncodingException;
         import java.lang.reflect.Type;
         import java.util.ArrayList;
         import java.util.HashSet;
@@ -33,7 +20,7 @@ package ig2i.travelPocket;
  * Created by aBennouna on 06/03/2016.
  */
 public class GlobalState extends Application{
-    static String cat = "MyTravelPocket";
+    static String cat = "MyTravelPocketDEBUG";
     SharedPreferences prefs;
     Gson gson;
 
@@ -62,6 +49,8 @@ public class GlobalState extends Application{
         if(prefs.contains("cities")) {
             Type type = new TypeToken<List<City>>(){}.getType();
             cities = gson.fromJson(prefs.getString("cities", ""), type);
+            //cities = new ArrayList<>();
+            //alerter(prefs.getString("cities", ""));
         } else {
             cities = new ArrayList<>();
         }

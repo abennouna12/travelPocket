@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -20,16 +19,11 @@ import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 
-public class MainActivity extends Activity implements View.OnClickListener   {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     GlobalState gs;
 
@@ -48,9 +42,9 @@ public class MainActivity extends Activity implements View.OnClickListener   {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gs = (GlobalState) getApplication();
-        refreshBttn = (MenuItem)findViewById(R.id.action_refresh);
+        refreshBttn = (MenuItem) findViewById(R.id.action_refresh);
 
-        rvCities=(RecyclerView)findViewById(R.id.rvCities);
+        rvCities = (RecyclerView) findViewById(R.id.rvCities);
 
         llm = new LinearLayoutManager(this);
         rvCities.setLayoutManager(llm);
@@ -74,32 +68,14 @@ public class MainActivity extends Activity implements View.OnClickListener   {
 
         swipeTouchListener();
 
-        testParams();
-
-        updateEverything();
+        if(gs.cities.size() != 0) {
+            updateEverything();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-    }
-
-    public void testParams() {
-        if(gs.prefs.contains("placesType")) {
-
-            Set<String> params = gs.prefs.getStringSet("placesType", null);
-
-            String out = "";
-
-            if (params != null) {
-                for (String p : params
-                        ) {
-                    out = out + " " + p;
-                }
-            }
-
-            gs.alerter(out);
-        }
     }
 
     private void goToInfoCity(){
@@ -159,10 +135,10 @@ public class MainActivity extends Activity implements View.OnClickListener   {
     }
 
     public void updatePrefs() {
-        String json = gson.toJson(gs.cities);
-        gs.prefs.edit().putString("cities", json).commit();
-       // gs.prefs.edit().remove("latlongs").commit();
-        gs.prefs.edit().putStringSet("latlongs", gs.latlongs).commit();
+        SharedPreferences.Editor editor = gs.prefs.edit();
+        editor.putString("cities", gson.toJson(gs.cities));
+        editor.putStringSet("latlongs", gs.latlongs);
+        editor.commit();
     }
 
     @Override
@@ -240,9 +216,7 @@ public class MainActivity extends Activity implements View.OnClickListener   {
 
                     @Override
                     public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
-                        for (int position : reverseSortedPositions) {
 
-                        }
                     }
                 });
 
@@ -264,7 +238,8 @@ public class MainActivity extends Activity implements View.OnClickListener   {
                 old = c;
             }
         }
-        old.update(result);
+        old.update(result,gs.prefs.getBoolean("updatePhoto",false));
+        //old.update(result);
         majAdapter();
     }
 

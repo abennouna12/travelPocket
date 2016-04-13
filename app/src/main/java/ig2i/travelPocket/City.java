@@ -1,5 +1,6 @@
 package ig2i.travelPocket;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public class City {
     String latitude;
     String longitude;
     List<WeatherDetail> daily;
+    List<Suggestion> suggestions;
 
     // Constructeur
     City(String pays, String name, String description, String currentWeather, String picture) {
@@ -23,18 +25,22 @@ public class City {
         this.name = name;
         this.currentWeather = currentWeather;
         this.picture = picture;
+        //this.suggestions = new ArrayList<>();
+        //this.daily = new ArrayList<>();
     }
 
     City(){
-
+        //this.suggestions = new ArrayList<>();
     }
 
-    void update(City c)
+    void update(City c,Boolean updatePhoto)
     {
         pays = c.pays;
         name = c.name;
         currentWeather = c.currentWeather;
-        //picture = c.picture;
+        if (updatePhoto) {
+            picture = c.picture;
+        }
         description = c.description;
         latitude = c.latitude;
         longitude = c.longitude;

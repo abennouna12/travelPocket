@@ -13,13 +13,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="#3A3A3A"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:id="@+id/relativeLayout">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/picture"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:scaleType="centerCrop"
             android:alpha="0.4"
             />
@@ -44,8 +44,8 @@
             android:id="@+id/currentWeather"
             android:textColor="@color/white"
             android:textStyle="normal"
-            android:layout_below="@+id/ville"
-            android:layout_centerHorizontal="true"/>
+            android:layout_below="@+id/temps"
+            android:layout_centerHorizontal="true" />
 
         <me.grantland.widget.AutofitTextView
             android:maxLines="1"
@@ -58,10 +58,11 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             android:fontFamily="sans-serif-light"
-            android:layout_below="@+id/currentWeather"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
         <me.grantland.widget.AutofitTextView
+            android:paddingTop="25dp"
             android:maxLines="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +74,7 @@
             android:fontFamily="sans-serif-light"
             android:textStyle="normal"
             android:layout_below="@+id/retour"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 
@@ -482,19 +483,23 @@
             android:layout_height="wrap_content"
             android:text="SUGGESTIONS"
             android:textSize="20sp"
-            android:fontFamily="sans-serif-bold"
+            android:fontFamily="sans-serif-light"
             android:id="@+id/suggestionText"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:textStyle="normal"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp" />
+            android:layout_marginStart="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/rvSuggestions"
-            android:layout_alignParentStart="true" />
+            android:layout_below="@+id/suggestionText"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
 

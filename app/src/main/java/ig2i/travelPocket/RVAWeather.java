@@ -25,7 +25,7 @@ public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> 
 
     public static class CityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        CardView cv;
+        CardView cv_weather;
         TextView name;
         TextView currentWeather;
         TextView pays;
@@ -33,7 +33,7 @@ public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> 
 
         public CityViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
+            cv_weather = (CardView)itemView.findViewById(R.id.cv_weather);
             name = (TextView)itemView.findViewById(R.id.name);
             pays = (TextView)itemView.findViewById(R.id.pays);
             currentWeather = (TextView)itemView.findViewById(R.id.currentWeather);
