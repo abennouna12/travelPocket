@@ -1,7 +1,6 @@
 package ig2i.travelPocket;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by aBennouna on 13/03/2016.
- */
+
 public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
     GlobalState gs;
@@ -28,12 +25,12 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
     City result;
     String pays;
 
-    public JSONWeatherInfo(String param, String latlong, MainActivity obj, String name, String pays) {
+    public JSONWeatherInfo(GlobalState gs, String param, String latlong, MainActivity obj, String name, String pays) {
         this.param = param;
         this.latlong = latlong;
         this.obj = obj;
         this.name = name;
-        gs = new GlobalState();
+        this.gs = gs;
         this.pays = pays;
         result = new City();
     }
@@ -48,15 +45,8 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
                 "&units=si" +
                 "&exclude=minutely,hourly";
 
-        String FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
-                "group_id=1463451%40N25&view_all=1" +
-                "&text=" + name +
-                "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027" +
-                "&format=json";
-
         WeatherResult = WeatherParser.getJSONFromUrl(WeatherURL);
 
-        FlickrResult = FlickrParser.getJSONFromUrlFlickr(FlickrURL);
 
         try {
 
@@ -64,8 +54,8 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
                     .getJSONObject("currently")
                     .getString("temperature");
 
-            Double initWeather = new Double(currentWeather);
-            int finalWeather = (int) Math.round((initWeather * 1 / 1));
+            // Arrondir la meteo
+            int finalWeather = (int) Math.round((Double.valueOf(currentWeather) * 1 / 1));
 
             result.currentWeather = Integer.toString(finalWeather) + "°";
 
@@ -75,7 +65,15 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
                     .getJSONObject("daily")
                     .getJSONArray("data");
 
-            for (int i = 0; i < 5; ++i) {
+            // Ne prendre que les 5 previsions incluant celle du jour, l'API nous fournit parfois
+            // les previsions de la veille, pour cela nous allons faire une verification
+
+            Date now = new Date();
+            Date firstDateApi =  new java.util.Date(daily.getJSONObject(0).getLong("time") * 1000);
+            int startday = (now.getDay() - firstDateApi.getDay());
+
+            for (int i = startday; i < startday + 5; ++i) {
+
                 JSONObject day = daily.getJSONObject(i);
                 WeatherDetail wd = new WeatherDetail();
                 wd.date = gs.translateDay(new java.util.Date(day.getLong("time") * 1000)
@@ -85,7 +83,7 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
                 Date sunset = new Date(day.getLong("sunsetTime") * 1000);
 
-                Date now = new Date();
+                // Nous modifions l'icon de la meteo dependamment du coucher et lever de soleil
 
                 Calendar c = Calendar.getInstance();
                 c.setTime(now);
@@ -98,10 +96,10 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
                     wd.icon = wd.icon.replace("night", "day");
                 }
 
-                Double temperatureMin = new Double(day.getString("temperatureMin"));
+                Double temperatureMin = Double.valueOf(day.getString("temperatureMin"));
                 String weatherMin = Integer.toString((int) Math.round((temperatureMin * 1 / 1))) + "°";
 
-                Double temperatureMax = new Double(day.getString("temperatureMax"));
+                Double temperatureMax = Double.valueOf(day.getString("temperatureMax"));
                 String weatherMax = Integer.toString((int) Math.round((temperatureMax * 1 / 1))) + "°";
 
                 wd.tempMin = weatherMin;
@@ -109,70 +107,76 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
                 result.daily.add(wd);
             }
 
-            // Recuperer toutes les photos et ne choisir qu'une seule
-            JSONObject obj;
-            JSONArray photos;
-            JSONObject photo;
+            if(param.equals("add") || gs.isPhotosUpdatable()) {
 
-            // Recuperer les données de l'image
-            String id;
-            String secret;
-            String server;
-            String farm;
-            obj = FlickrResult.getJSONObject("photos");
-            int total = obj.getInt("total");
-
-            String icon = WeatherResult
-                    .getJSONObject("currently")
-                    .getString("icon")
-                    .replace("-", " ");
-
-            String description = WeatherResult
-                    .getJSONObject("currently")
-                    .getString("summary");
-
-
-            if (total > 0) {
-
-                photos = obj.getJSONArray("photo");
-                photo = photos.getJSONObject(gs.random(0, photos.length()));
-
-                // Recuperer les données de l'image
-                id = photo.getString("id");
-                secret = photo.getString("secret");
-                server = photo.getString("server");
-                farm = photo.getString("farm");
-
-
-            } else {
-
-                FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
+                String FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
                         "group_id=1463451%40N25&view_all=1" +
-                        "&text=" + icon +
+                        "&text=" + name +
                         "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027" +
                         "&format=json";
 
                 FlickrResult = FlickrParser.getJSONFromUrlFlickr(FlickrURL);
-
-                obj = FlickrResult.getJSONObject("photos");
-
-                photos = obj.getJSONArray("photo");
-                photo = photos.getJSONObject(gs.random(0, photos.length()));
+                // Recuperer toutes les photos et ne choisir qu'une seule
+                JSONObject obj;
+                JSONArray photos;
+                JSONObject photo;
 
                 // Recuperer les données de l'image
-                id = photo.getString("id");
-                secret = photo.getString("secret");
-                server = photo.getString("server");
-                farm = photo.getString("farm");
+                String id;
+                String secret;
+                String server;
+                String farm;
+
+                obj = FlickrResult.getJSONObject("photos");
+                int total = obj.getInt("total");
+
+                if (total > 0) {
+
+                    photos = obj.getJSONArray("photo");
+                    photo = photos.getJSONObject(gs.random(0, photos.length()));
+
+                    // Recuperer les données de l'image
+                    id = photo.getString("id");
+                    secret = photo.getString("secret");
+                    server = photo.getString("server");
+                    farm = photo.getString("farm");
+
+
+                } else {
+
+                    String icon = WeatherResult
+                            .getJSONObject("currently")
+                            .getString("icon")
+                            .replace("-", " ");
+
+                    FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
+                            "group_id=1463451%40N25&view_all=1" +
+                            "&text=" + icon +
+                            "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027" +
+                            "&format=json";
+
+                    FlickrResult = FlickrParser.getJSONFromUrlFlickr(FlickrURL);
+
+                    obj = FlickrResult.getJSONObject("photos");
+
+                    photos = obj.getJSONArray("photo");
+                    photo = photos.getJSONObject(gs.random(0, photos.length()));
+
+                    // Recuperer les données de l'image
+                    id = photo.getString("id");
+                    secret = photo.getString("secret");
+                    server = photo.getString("server");
+                    farm = photo.getString("farm");
+                }
+
+                result.picture = "https://farm" + farm + ".staticflickr.com/"
+                        + server + "/" + id + "_" + secret + ".jpg";
+
             }
 
             result.pays = pays;
             result.name = name;
-
-            result.picture = "https://farm" + farm + ".staticflickr.com/"
-                    + server + "/" + id + "_" + secret + ".jpg";
-
-            result.description = description;
+            result.description = WeatherResult.getJSONObject("currently").getString("summary");
             result.latitude = latlong.split(",")[0];
             result.longitude = latlong.split(",")[1];
 
@@ -185,7 +189,7 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
     @Override
     protected void onPostExecute(City result) {
-        if ( param == "add" ) {
+        if ( param.equals("add") ) {
             this.obj.setWeather(result);
             this.obj.addCity();
         } else {

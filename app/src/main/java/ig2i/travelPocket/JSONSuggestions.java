@@ -1,35 +1,24 @@
 package ig2i.travelPocket;
 
-import android.content.Context;
-import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import com.google.android.gms.location.LocationListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Set;
 
-/**
- * Created by aBennouna on 13/03/2016.
- */
 public class JSONSuggestions extends AsyncTask<Void, Void, City> {
 
     GlobalState gs;
-    InfoCity obj;
+    InfoCityActivity obj;
     JSONParser SuggestionsParser = new JSONParser();
     JSONObject SuggestionsResult;
     JSONParser PlaceParser = new JSONParser();
     JSONObject PlaceResult;
     City result;
 
-    public JSONSuggestions(InfoCity obj)
+    public JSONSuggestions(InfoCityActivity obj)
     {
         this.obj = obj;
         this.gs = obj.gs;
@@ -39,34 +28,18 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
     @Override
     protected City doInBackground(Void... params) {
 
-        String types = "";
+        String types = gs.getTypesList();
+
         int maxSuggestions = Integer.decode(gs.prefs.getString("maxSuggestions", "20")) - 1;
         int radius = Integer.decode(gs.prefs.getString("radius", "1")) * 1000;
 
-
-        if(gs.prefs.contains("placesType")) {
-
-            Set<String> typesSet = gs.prefs.getStringSet("placesType", null);
-
-            if (typesSet != null) {
-                for (String p : typesSet) {
-                    types = types + "|" + p;
-                }
-            }
-            types = (types.isEmpty()) ? types : types.substring(1);
-        }
-
-        String typeString = (types.equals(""))? "&types=all" : ("&types=" + types);
-
         String suggestionsURL = "https://maps.googleapis.com/maps/api/place/radarsearch/json?" +
                 "location=" + result.latitude + ","+ result.longitude +
-                "&radius=" + radius + typeString +
+                "&radius=" + radius +
+                "&types=" + types +
                 "&key=AIzaSyD2qhsWZbP-bYq1URZEAaSY17NanvHOwbw";
 
-
-
         SuggestionsResult = SuggestionsParser.getJSONFromUrl(suggestionsURL);
-
 
         try {
 
@@ -76,14 +49,22 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
 
                 result.suggestions = new ArrayList<>();
 
+                // Si la liste des suggestions fournie par google contient moins d'elements que
+                // le nombre de suggestions voulues, on ne fourni que le nombre de suggestions
+                // possibles
                 maxSuggestions = (suggestions.length() < maxSuggestions) ? suggestions.length() : maxSuggestions;
 
                 for(int i = 0 ; i < maxSuggestions ; i++) {
 
                     JSONObject suggest = suggestions.getJSONObject(i);
+
                     Suggestion s = new Suggestion();
+
                     s.latitude = suggest.getJSONObject("geometry").getJSONObject("location").getString("lat");
                     s.longitude = suggest.getJSONObject("geometry").getJSONObject("location").getString("lng");
+
+                    // On lance une requete pour pouvoir avoir les details d'une suggestion
+                    // Tel / Image / Site ...
 
                     String placeLink = "https://maps.googleapis.com/maps/api/place/details/json?" +
                             "placeid=" + suggest.getString("place_id") +
@@ -109,6 +90,8 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
                                 "&key=AIzaSyD2qhsWZbP-bYq1URZEAaSY17NanvHOwbw";
 
                     } else {
+                        // Si google places ne nous fournit pas de photos, on récupere la photos de
+                        // la meteo
                         s.picture = result.picture;
                     }
 
@@ -135,6 +118,7 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
 
     @Override
     protected void onPostExecute(City result) {
+        // On renvoie la liste des suggestions a l'activité pour être traitée
         obj.addSuggestions(result);
     }
 

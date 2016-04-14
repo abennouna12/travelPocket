@@ -3,6 +3,7 @@ package ig2i.travelPocket;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,11 +22,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public class InfoCity extends Activity implements View.OnClickListener {
+public class InfoCityActivity extends Activity implements View.OnClickListener {
 
     GlobalState gs;
 
@@ -63,18 +62,16 @@ public class InfoCity extends Activity implements View.OnClickListener {
     LinearLayoutManager llm;
     RecyclerView rvSuggestions;
 
-    LocationManager locationMangaer = null;
+    LocationManager locationManager = null;
     LocationListener locationListener = null;
-
 
     Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //enlever le titre
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_info_city);
+
         gs = (GlobalState) getApplication();
         Fresco.initialize(this);
 
@@ -82,31 +79,45 @@ public class InfoCity extends Activity implements View.OnClickListener {
 
         adapter = new RVASuggestion(gs);
 
-        setTextViews();
-        setImages();
+        setView();
 
-        if(gs.prefs.contains(getParam())) {
-            if(gs.prefs.contains("refreshSuggestions")) {
-                if(gs.prefs.getBoolean("refreshSuggestions",false)) {
-                    JSONSuggestions w = new JSONSuggestions(this);
-                    w.execute();
-                }
-            } else {
-                Type type = new TypeToken<List<Suggestion>>() {}.getType();
-                gs.selectedCity.suggestions = gson.fromJson(gs.prefs.getString(getParam(), ""), type);
-                setAdapter();
-            }
-        } else {
-            JSONSuggestions w = new JSONSuggestions(this);
-            w.execute();
-        }
+        setSuggestions();
 
-        getLocation();
+        setLocation();
 
     }
 
+    // Fonction permettant de recuperer les suggestions
+    public void setSuggestions() {
+        if(gs.prefs.contains(gs.getParamSuggest())) {
+            if(gs.isSuggestionsRefreshable()) {
+                getJSONSuggestions();
+            } else {
+                getPrefsSuggestions();
+            }
+        } else {
+            getJSONSuggestions();
+        }
+    }
 
-    public void setTextViews() {
+    // Fonction permettant de recuperer les suggestions a l'aide de la classe JSONParser
+    public void getJSONSuggestions() {
+        JSONSuggestions w = new JSONSuggestions(this);
+        w.execute();
+    }
+
+    // Fonction permettant de recuperer les suggestions a l'aide des shared preferences
+    public void getPrefsSuggestions() {
+        Type type = new TypeToken<List<Suggestion>>() {}.getType();
+        // Deserialiser la liste des suggestions
+        gs.selectedCity.suggestions = gson.fromJson(gs.prefs.getString(gs.getParamSuggest(), ""), type);
+        setAdapter();
+    }
+
+    // Cette fonction permet d'initialiset et de donner une valeur a tout les textviews et images
+    // de la vue
+    public void setView() {
+
         temps = (TextView)findViewById(R.id.temps);
         ville = (TextView)findViewById(R.id.ville);
         currentWeather = (TextView)findViewById(R.id.currentWeather);
@@ -160,9 +171,7 @@ public class InfoCity extends Activity implements View.OnClickListener {
         tempMaxDay2.setText(gs.selectedCity.daily.get(2).tempMax);
         tempMaxDay3.setText(gs.selectedCity.daily.get(3).tempMax);
         tempMaxDay4.setText(gs.selectedCity.daily.get(4).tempMax);
-    }
 
-    public void setImages() {
         picToday.setImageDrawable(getResources().getDrawable(getResources().
                 getIdentifier("@drawable/" +
                         gs.selectedCity.daily.get(0).icon, null, getPackageName())));
@@ -180,61 +189,62 @@ public class InfoCity extends Activity implements View.OnClickListener {
                         gs.selectedCity.daily.get(4).icon, null, getPackageName())));
     }
 
-    public void  getLocation() {
+    // Fonction permettant d'initialiser la geolocalisation
+    public void  setLocation() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
 
         locationListener = new MyLocationListener();
 
-        locationMangaer = (LocationManager)
+        locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
 
-        locationMangaer.requestLocationUpdates(LocationManager
-                .GPS_PROVIDER, 5000, 100,locationListener);
+        locationManager.requestLocationUpdates(LocationManager
+                .GPS_PROVIDER, 5000, 100, locationListener);
 
     }
 
+    // Classe de LocationListener permettant de mettre a jour la position actuelle et l'enregistrer
     private class MyLocationListener implements LocationListener {
+
         @Override
         public void onLocationChanged(final Location location) {
-            gs.prefs.edit().putString("currentLat", Double.toString(location.getLatitude())).commit();
-            gs.prefs.edit().putString("currentLng", Double.toString(location.getLongitude())).commit();
+            SharedPreferences.Editor editor = gs.prefs.edit();
+            editor.putString("currentLat", Double.toString(location.getLatitude()));
+            editor.putString("currentLng", Double.toString(location.getLongitude()));
+            editor.apply();
+            // Apres avoir enregistrer la nouvelle position actuelle, les suggestions seront
+            // rechargées afin d'afficher la nouvelle distance entre la suggestion et l'emplacement
+            // actuel
             adapter.notifyDataSetChanged();
         }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
 
         @Override
-        public void onProviderEnabled(String provider) {
-
-        }
+        public void onProviderEnabled(String provider) {}
 
         @Override
-        public void onProviderDisabled(String provider) {
-
-        }
+        public void onProviderDisabled(String provider) {}
     }
 
+    // Fonction executée après avoir recuperer les suggestions (en JSON), cette fonction permet de
+    // charger les suggestions
     public void addSuggestions (City c) {
         gs.selectedCity = c;
         setAdapter();
-        gs.prefs.edit().putString(getParam(), gson.toJson(gs.selectedCity.suggestions)).commit();
+        // La liste des suggestions est ensuite enregistrée dans les shared preferences
+        SharedPreferences.Editor editor = gs.prefs.edit();
+        editor.putString(gs.getParamSuggest(), gson.toJson(gs.selectedCity.suggestions));
+        editor.apply();
     }
 
+    // Fonction permettant d'initialiser le recyclerview
     public void setAdapter() {
         rvSuggestions=(RecyclerView)findViewById(R.id.rvSuggestions);
         llm = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
@@ -243,27 +253,6 @@ public class InfoCity extends Activity implements View.OnClickListener {
         adapter = new RVASuggestion(gs);
         rvSuggestions.setAdapter(adapter);
     }
-
-    public String getParam() {
-        String city = gs.selectedCity.name;
-        String prefs = "";
-
-        if(gs.prefs.contains("placesType")) {
-
-            Set<String> typesSet = gs.prefs.getStringSet("placesType", null);
-
-            if (typesSet != null) {
-                for (String p : typesSet) {
-                    prefs = prefs + "|" + p;
-                }
-            }
-
-            prefs = (prefs.isEmpty()) ? prefs : prefs.substring(1);
-        }
-
-        return city + "//" + prefs;
-    }
-
 
     @Override
     public void onClick(View v) {

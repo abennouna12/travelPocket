@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,16 +15,12 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.gson.Gson;
 
-import java.util.Set;
-
-
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity {
 
     GlobalState gs;
 
@@ -39,8 +36,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         gs = (GlobalState) getApplication();
         refreshBttn = (MenuItem) findViewById(R.id.action_refresh);
 
@@ -56,11 +55,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         initializeAdapter();
 
+        // Click listener
         adapter.setOnItemClickListener(new RVAWeather
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                gs.alerter(" Clicked on Item " + position);
                 gs.selectedCity = gs.cities.get(position);
                 goToInfoCity();
             }
@@ -68,9 +67,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         swipeTouchListener();
 
-        if(gs.cities.size() != 0) {
-            updateEverything();
-        }
+        //updateEverything();
     }
 
     @Override
@@ -78,16 +75,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onStart();
     }
 
+    // Fonction pour aller a l'activité InfoCityActivity
     private void goToInfoCity(){
-        Intent toInfoCity = new Intent(this, InfoCity.class);
+        Intent toInfoCity = new Intent(this, InfoCityActivity.class);
         startActivity(toInfoCity);
     }
 
+    // Fonction pour initialiser le recyclerview adapter
     private void initializeAdapter(){
         adapter = new RVAWeather(gs.cities);
         rvCities.setAdapter(adapter);
     }
 
+    // Fonction pour mettre a jour l'adapter
     private void majAdapter(){
         adapter.notifyDataSetChanged();
     }
@@ -104,7 +104,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         switch(id)
         {
             case R.id.action_settings :
-                gs.alerter("Clic sur Preferences");
                 Intent versPreferences = new Intent(this,PreferencesActivity.class);
                 startActivity(versPreferences);
                 break;
@@ -119,13 +118,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                     .build(this);
                     startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
                 } catch (GooglePlayServicesRepairableException e) {
-                    // TODO: Handle the error.
+                    Log.e("RepairableException",e.getMessage());
                 } catch (GooglePlayServicesNotAvailableException e) {
-                    // TODO: Handle the error.
+                    Log.e("NotAvailableException", e.getMessage());
                 }
                 break;
             case R.id.action_refresh :
-                //refreshBttn.setEnabled(false);
                 updateEverything();
                 break;
 
@@ -134,19 +132,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    // Update shared preferences
     public void updatePrefs() {
         SharedPreferences.Editor editor = gs.prefs.edit();
         editor.putString("cities", gson.toJson(gs.cities));
         editor.putStringSet("latlongs", gs.latlongs);
-        editor.commit();
+        editor.apply();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-        }
-    }
-
+    // Fonction executee lors de l'ajout d'une ville
     public void setWeather(City result){
         gs.cities.add(result);
         gs.latlongs.add(latlong);
@@ -165,28 +159,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 String[] address = place.getAddress().toString().split(",");
                 pays = address[ address.length - 1 ].toUpperCase().substring(1);
                 if(!(gs.latlongs.contains(latlong))) {
-                    JSONWeatherInfo w = new JSONWeatherInfo("add",latlong, this, city, pays);
+                    JSONWeatherInfo w = new JSONWeatherInfo(gs,"add",latlong, this, city, pays);
                     w.execute();
                 } else {
                     gs.alerter(city + ", " + pays + " existe déjà");
                 }
 
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(this, data);
-                // TODO: Handle the error.
-                gs.alerter(status.getStatusMessage());
-
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
             }
         }
     }
 
+    // Add a city and update adapter
     public void addCity() {
         adapter.notifyItemInserted(gs.cities.size()-1);
         majAdapter();
     }
 
+    // Swipe touch listener to delete a city while swipping left
     public void swipeTouchListener()
     {
         SwipeableRecyclerViewTouchListener swipeTouchListener =
@@ -211,7 +200,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             adapter.notifyItemRemoved(position);
                         }
                         updatePrefs();
-                        adapter.notifyDataSetChanged();
+                        majAdapter();
                     }
 
                     @Override
@@ -223,14 +212,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
         rvCities.addOnItemTouchListener(swipeTouchListener);
     }
 
-    public void updateWeather(City c) {
+    // Fonction pour mettre a jour une ville
+    public void updateCity(City c) {
         latlong = c.latitude + "," + c.longitude;
         city = c.name;
         pays = c.pays;
-        JSONWeatherInfo w = new JSONWeatherInfo("update",latlong, this, city, pays);
+        JSONWeatherInfo w = new JSONWeatherInfo(gs,"update",latlong, this, city, pays);
         w.execute();
     }
 
+    // Fonction appellee apres avoir recuperer la nouvelle ville
     public void update (City result) {
         City old = new City();
         for(City c : gs.cities) {
@@ -238,16 +229,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 old = c;
             }
         }
-        old.update(result,gs.prefs.getBoolean("updatePhoto",false));
-        //old.update(result);
+        old.update(result,gs.isPhotosUpdatable());
         majAdapter();
     }
 
+    // Fonction permettant de mettre a jour toutes les villes
     public void updateEverything(){
-        for(City c : gs.cities) {
-            updateWeather(c);
+
+        if(gs.cities.size() != 0) {
+            for (City c : gs.cities) {
+                updateCity(c);
+            }
+            updatePrefs();
         }
-        updatePrefs();
+
     }
 
 }

@@ -1,14 +1,9 @@
 package ig2i.travelPocket;
 
-/**
- * Created by aBennouna on 13/03/2016.
- */
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.http.params.BasicHttpParams;
@@ -24,11 +19,6 @@ import javax.net.ssl.HttpsURLConnection;
 public class JSONParser {
 
     // Classe permettant de parser un JSON
-    /*
-    static InputStream is = null;
-    static JSONObject jObj = null;
-    static String json = "";
-    */
 
     JSONObject JSONresponseText;
     int timeout1 = 1000*2;
@@ -42,7 +32,6 @@ public class JSONParser {
     public JSONObject getJSONFromUrl(String requesturl) {
 
         // Making HTTP request
-        String result = "";
 
         Log.d("requesturl = ", requesturl);
 
@@ -60,7 +49,7 @@ public class JSONParser {
             connection.setRequestProperty("Accept","*/*");
             connection.setDoInput(true);
             connection.setDoOutput(false);
-            StringBuffer answer = new StringBuffer();
+            StringBuilder answer = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     connection.getInputStream(),"UTF-8"));
 
@@ -70,17 +59,14 @@ public class JSONParser {
             }
             reader.close();
             Log.d("SERVICE RESPONSE: ", answer.toString());
-            result = answer.toString();
 
             try {
-                JSONresponseText = new JSONObject(result);
+                JSONresponseText = new JSONObject(answer.toString());
                 Log.i("JSONresponseText", JSONresponseText.toString());
             } catch (JSONException e) {
                 Log.e("JSON Parser", "Error parsing data " + e.toString());
             }
 
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -95,8 +81,6 @@ public class JSONParser {
     // il faudra faire des modifications avant de le parser
     public JSONObject getJSONFromUrlFlickr(String requesturl) {
 
-        // Making HTTP request
-        String result = "";
 
         Log.d("requesturl = ", requesturl);
 
@@ -114,7 +98,7 @@ public class JSONParser {
             connection.setRequestProperty("Accept","*/*");
             connection.setDoInput(true);
             connection.setDoOutput(false);
-            StringBuffer answer = new StringBuffer();
+            StringBuilder answer = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
 
@@ -124,19 +108,16 @@ public class JSONParser {
             }
             reader.close();
             Log.d("SERVICE RESPONSE: ", answer.toString());
-            result = answer.toString();
-            result = result.replace("jsonFlickrApi(", "");
-            result = result.replace("\"stat\":\"ok\"})","\"stat\":\"ok\"}");
 
             try {
-                JSONresponseText = new JSONObject(result);
+                JSONresponseText = new JSONObject(answer.toString()
+                        .replace("jsonFlickrApi(", "")
+                        .replace("\"stat\":\"ok\"})","\"stat\":\"ok\"}"));
                 Log.i("JSONresponseText", JSONresponseText.toString());
             } catch (JSONException e) {
                 Log.e("JSON Parser", "Error parsing data " + e.toString());
             }
 
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

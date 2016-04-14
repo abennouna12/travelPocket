@@ -1,11 +1,7 @@
 package ig2i.travelPocket;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by aBennouna on 11/03/2016.
- */
 public class City {
     // Classe d'ajout de villes
     String pays;
@@ -19,6 +15,7 @@ public class City {
     List<Suggestion> suggestions;
 
     // Constructeur
+    /*
     City(String pays, String name, String description, String currentWeather, String picture) {
         this.pays = pays;
         this.description = description;
@@ -27,18 +24,21 @@ public class City {
         this.picture = picture;
         //this.suggestions = new ArrayList<>();
         //this.daily = new ArrayList<>();
-    }
+    }*/
 
     City(){
         //this.suggestions = new ArrayList<>();
     }
 
-    void update(City c,Boolean updatePhoto)
+    // Mise a jour des informations d'une ville
+    // Afin d'éviter un long temps de chargemen, l'utilisateur pourra choisir de mettre à jour les
+    // photos ou non a partir des parametres
+    void update(City c,Boolean photoUpdatable)
     {
         pays = c.pays;
         name = c.name;
         currentWeather = c.currentWeather;
-        if (updatePhoto) {
+        if (photoUpdatable) {
             picture = c.picture;
         }
         description = c.description;

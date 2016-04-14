@@ -1,13 +1,15 @@
 package ig2i.travelPocket;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +18,10 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
-
-/**
- * Created by aBennouna on 11/03/2016.
- */
-
 
 public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.SuggestionViewHolder> {
 
@@ -45,15 +41,15 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
 
         public SuggestionViewHolder(View itemView) {
             super(itemView);
-            placeName = (TextView)itemView.findViewById(R.id.placeName);
-            rating = (RatingBar)itemView.findViewById(R.id.rating);
-            openClose = (TextView)itemView.findViewById(R.id.openClose);
-            distance = (TextView)itemView.findViewById(R.id.distanceText);
-            picture = (SimpleDraweeView)itemView.findViewById(R.id.picture_place_suggest);
-            phoneIcon = (ImageView)itemView.findViewById(R.id.phoneIcon);
-            webIcon = (ImageView)itemView.findViewById(R.id.webIcon);
-            mapIcon = (ImageView)itemView.findViewById(R.id.mapIcon);
-            openCloseLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayoutOpenClose);
+            placeName = (TextView) itemView.findViewById(R.id.placeName);
+            rating = (RatingBar) itemView.findViewById(R.id.rating);
+            openClose = (TextView) itemView.findViewById(R.id.openClose);
+            distance = (TextView) itemView.findViewById(R.id.distanceText);
+            picture = (SimpleDraweeView) itemView.findViewById(R.id.picture_place_suggest);
+            phoneIcon = (ImageView) itemView.findViewById(R.id.phoneIcon);
+            webIcon = (ImageView) itemView.findViewById(R.id.webIcon);
+            mapIcon = (ImageView) itemView.findViewById(R.id.mapIcon);
+            openCloseLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayoutOpenClose);
         }
 
     }
@@ -62,7 +58,7 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
 
     GlobalState gs;
 
-    RVASuggestion(GlobalState gs){
+    RVASuggestion(GlobalState gs) {
         this.gs = gs;
         this.suggestions = gs.selectedCity.suggestions;
     }
@@ -76,8 +72,7 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
     public SuggestionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.suggestion_item, viewGroup, false);
         mContext = viewGroup.getContext();
-        SuggestionViewHolder svh = new SuggestionViewHolder(v);
-        return svh;
+        return new SuggestionViewHolder(v);
     }
 
     @Override
@@ -93,18 +88,12 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
         arrivee.setLatitude(Double.parseDouble(suggestions.get(i).latitude));
         arrivee.setLongitude(Double.parseDouble(suggestions.get(i).longitude));
 
-        float distance = depart.distanceTo(arrivee) / 1000;
-
+        String distance = String.format("%.2f", depart.distanceTo(arrivee) / 1000) + "kms";
         suggestionViewHolder.openClose.setText(suggestions.get(i).openClose);
-        suggestionViewHolder.distance.setText(String.format("%.2f", distance) + "kms");
+        suggestionViewHolder.distance.setText(distance);
 
-        if(suggestions.get(i).openClose=="Ouvert") {
-            suggestionViewHolder.openCloseLayout.setBackground(ContextCompat.getDrawable(mContext,R.drawable.rounded_bg_green));
-        } else if(suggestions.get(i).openClose=="Fermé"){
-            suggestionViewHolder.openCloseLayout.setBackground(ContextCompat.getDrawable(mContext,R.drawable.rounded_bg_red));
-        } else {
-            suggestionViewHolder.openCloseLayout.setBackground(ContextCompat.getDrawable(mContext,R.drawable.rounded_bg_orange));
-        }
+        setOpenCloseColor(suggestionViewHolder,i);
+
         Uri uri = Uri.parse(suggestions.get(i).picture);
         suggestionViewHolder.picture.setImageURI(uri);
 
@@ -114,7 +103,7 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
         final String currentLatitude = suggestions.get(i).latitude;
         final String currentLongitude = suggestions.get(i).longitude;
 
-        if(currentPhone != "") {
+        if (!currentPhone.isEmpty()) {
             suggestionViewHolder.phoneIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -125,6 +114,9 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     String number = "tel:" + currentPhone;
                                     Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+                                    if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                        return;
+                                    }
                                     mContext.startActivity(callIntent);
                                 }
                             })
@@ -170,7 +162,7 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
             }
         });
 
-        if (currentWeb != "") {
+        if (!currentWeb.isEmpty()) {
             suggestionViewHolder.webIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -187,6 +179,17 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
     @Override
     public int getItemCount() {
         return (suggestions == null) ? 0 : suggestions.size();
+    }
+
+    // Fonction permettant de changer la couleur de l'horaire d'ouverture
+    public void setOpenCloseColor(SuggestionViewHolder suggestionViewHolder, int i) {
+        if (suggestions.get(i).openClose.equals("Ouvert")) {
+            suggestionViewHolder.openCloseLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.rounded_bg_green));
+        } else if (suggestions.get(i).openClose.equals("Fermé")) {
+            suggestionViewHolder.openCloseLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.rounded_bg_red));
+        } else {
+            suggestionViewHolder.openCloseLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.rounded_bg_orange));
+        }
     }
 
 

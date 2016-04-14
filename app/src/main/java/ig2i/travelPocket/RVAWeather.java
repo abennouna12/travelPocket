@@ -13,17 +13,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
-/**
- * Created by aBennouna on 11/03/2016.
- */
-
-
 public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> {
 
 
-    private static MyClickListener myClickListener;
+    private MyClickListener myClickListener;
 
-    public static class CityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class CityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CardView cv_weather;
         TextView name;
@@ -65,8 +60,7 @@ public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> 
     @Override
     public CityViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.weather_item, viewGroup, false);
-        CityViewHolder cvh = new CityViewHolder(v);
-        return cvh;
+        return new CityViewHolder(v);
     }
 
     @Override
@@ -80,11 +74,11 @@ public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> 
 
     @Override
     public int getItemCount() {
-        return cities.size();
+        return cities.equals(null) ? 0 : cities.size();
     }
 
     public interface MyClickListener {
-        public void onItemClick(int position, View v);
+        void onItemClick(int position, View v);
     }
 
 }

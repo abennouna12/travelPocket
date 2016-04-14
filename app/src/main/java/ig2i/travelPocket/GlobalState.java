@@ -16,11 +16,8 @@ package ig2i.travelPocket;
         import java.util.Set;
 
 
-/**
- * Created by aBennouna on 06/03/2016.
- */
 public class GlobalState extends Application{
-    static String cat = "MyTravelPocketDEBUG";
+    static String tag = "MyTravelPocketDEBUG";
     SharedPreferences prefs;
     Gson gson;
 
@@ -32,29 +29,38 @@ public class GlobalState extends Application{
         super.onCreate();
     }
 
-    // Fonction pour afficher un toast sur le telephone et un log dans la console pour alerter
-    public void alerter(String s) {
-        Toast t = Toast.makeText(this, s, Toast.LENGTH_LONG);
-        t.show();
-        Log.i(cat, s);
-    }
-
     List<City> cities;
     Set<String> latlongs;
     City selectedCity;
 
+    // Fonction pour afficher un toast sur le telephone et un log dans la console pour alerter
+    public void alerter(String s) {
+        // Afficher un toast dans le telephone
+        toast(s);
+        // Afficher dans la console
+        Log.i(tag, s);
+    }
+
+    // Fonction pour afficher un toast
+    public void toast(String s) {
+        Toast t = Toast.makeText(this, s, Toast.LENGTH_LONG);
+        t.show();
+    }
+
     // Fonction lancée au démarrage de l'application pour initialiser les villes
-    // (A modifier pour enregistrer la liste dans les system parameters)
     public void loadCities() {
         if(prefs.contains("cities")) {
+            // On recupere la liste des villes des shared preferences pour ensuite la deserializer
+            // en List<City>
             Type type = new TypeToken<List<City>>(){}.getType();
             cities = gson.fromJson(prefs.getString("cities", ""), type);
-            //cities = new ArrayList<>();
-            //alerter(prefs.getString("cities", ""));
         } else {
+            // Si il n'y a pas de liste enregistrée dans les shared preferences, on crée une liste
             cities = new ArrayList<>();
         }
         if(prefs.contains("latlongs")) {
+            // On recupere la liste des latitudes et longitudes des shared preferences
+            // Cette liste sert d'identifiant unique pour une ville
             latlongs = prefs.getStringSet("latlongs", null);
         } else {
             latlongs = new HashSet<>();
@@ -64,13 +70,13 @@ public class GlobalState extends Application{
 
     // Fonction random permet de retourner un int entre deux valeurs prédéfinis
     // Cette fonction est principalement utilisée lors de la récupération des images
-    // de l'API Flickr, on choisis une image random
+    // de l'API Flickr et des suggestions de Google Places, on choisis une image random
     public int random(int min, int max) {
         return min + (int)(Math.random() * max);
     }
 
-    public String translateDay (String engDay)
-    {
+    // Fonction permettant de traduire les jours obtenus par l'API Forecast.io (Anglais->Francais)
+    public String translateDay (String engDay) {
         switch (engDay){
             default :
                 return "";
@@ -89,6 +95,43 @@ public class GlobalState extends Application{
             case "Sun" :
                 return "Dim";
         }
+    }
+
+
+    // Fonction permettant d'avoir les types de suggestions voulues
+    public String getTypesList() {
+
+        String pr = "";
+        if(prefs.contains("placesType")) {
+
+            Set<String> typesSet = prefs.getStringSet("placesType", null);
+
+            if (typesSet != null) {
+                for (String p : typesSet) {
+                    pr = pr + "|" + p;
+                }
+            }
+
+            pr = (pr.isEmpty()) ? "all" : pr.substring(1);
+        }
+
+        return pr;
+
+    }
+
+    // Cette fonction a pour but de creer un tag pour sauvegarder la liste des suggestions selon
+    // les parametres choisis par l'utilisateur (Restaurant, Café, ....)
+    // Ce tag est formé de telle sorte : Ville//param1|param2|param3...
+    public String getParamSuggest() {
+        return selectedCity.name + "//" + getTypesList();
+    }
+
+    public Boolean isSuggestionsRefreshable() {
+        return prefs.getBoolean("refreshSuggestions",false);
+    }
+
+    public Boolean isPhotosUpdatable() {
+        return prefs.getBoolean("updatePhoto",false);
     }
 
 }
