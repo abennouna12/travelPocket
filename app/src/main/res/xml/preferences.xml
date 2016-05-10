@@ -38,7 +38,7 @@
         android:inputType="number"
         android:key="maxSuggestions"
         android:title="Nombre maximum de suggestions"
-        android:summary="Definir ici le nombre maximum de suggestions"
+        android:summary="Définit le nombre maximum de suggestions"
         />
 
 </PreferenceScreen>

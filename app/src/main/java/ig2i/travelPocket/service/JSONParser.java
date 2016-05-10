@@ -1,4 +1,4 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;

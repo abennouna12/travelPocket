@@ -1,4 +1,4 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.service;
 
 import android.os.AsyncTask;
 
@@ -9,6 +9,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import ig2i.travelPocket.GlobalState;
+import ig2i.travelPocket.activity.MainActivity;
+import ig2i.travelPocket.model.City;
+import ig2i.travelPocket.model.WeatherDetail;
 
 
 public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {

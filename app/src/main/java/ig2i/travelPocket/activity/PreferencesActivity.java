@@ -1,7 +1,9 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+
+import ig2i.travelPocket.R;
 
 public class PreferencesActivity extends PreferenceActivity{
 

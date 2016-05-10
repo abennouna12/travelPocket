@@ -1,4 +1,4 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.service;
 
 import android.os.AsyncTask;
 
@@ -7,6 +7,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import ig2i.travelPocket.GlobalState;
+import ig2i.travelPocket.activity.InfoCityActivity;
+import ig2i.travelPocket.model.City;
+import ig2i.travelPocket.model.Suggestion;
 
 public class JSONSuggestions extends AsyncTask<Void, Void, City> {
 
@@ -29,6 +34,8 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
     protected City doInBackground(Void... params) {
 
         String types = gs.getTypesList();
+
+        types = (types == "") ? "all" : types;
 
         int maxSuggestions = Integer.decode(gs.prefs.getString("maxSuggestions", "20")) - 1;
         int radius = Integer.decode(gs.prefs.getString("radius", "1")) * 1000;
@@ -57,6 +64,7 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
                 for(int i = 0 ; i < maxSuggestions ; i++) {
 
                     JSONObject suggest = suggestions.getJSONObject(i);
+
 
                     Suggestion s = new Suggestion();
 
@@ -104,7 +112,18 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
                     s.rating = (PlaceResult.has("rating")) ?
                             PlaceResult.getLong("rating") : (float)0;
 
-                    result.suggestions.add(s);
+                    // Si le nom n'est constitué que de chiffres (exemple code postale), en n'affiche
+                    // pas la suggestion
+                    try
+                    {
+                        double d = Double.parseDouble(s.placeName);
+                        maxSuggestions = (maxSuggestions < suggestions.length()) ?
+                                maxSuggestions + 1 : maxSuggestions;
+                    }
+                    catch(NumberFormatException nfe)
+                    {
+                        result.suggestions.add(s);
+                    }
                 }
 
             }

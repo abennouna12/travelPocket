@@ -1,18 +1,18 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.model;
 
 import java.util.List;
 
 public class City {
     // Classe d'ajout de villes
-    String pays;
-    String name;
-    String currentWeather;
-    String picture;
-    String description;
-    String latitude;
-    String longitude;
-    List<WeatherDetail> daily;
-    List<Suggestion> suggestions;
+    public String pays;
+    public String name;
+    public String currentWeather;
+    public String picture;
+    public String description;
+    public String latitude;
+    public String longitude;
+    public List<WeatherDetail> daily;
+    public List<Suggestion> suggestions;
 
     // Constructeur
     /*
@@ -26,14 +26,14 @@ public class City {
         //this.daily = new ArrayList<>();
     }*/
 
-    City(){
+    public City(){
         //this.suggestions = new ArrayList<>();
     }
 
     // Mise a jour des informations d'une ville
     // Afin d'éviter un long temps de chargemen, l'utilisateur pourra choisir de mettre à jour les
     // photos ou non a partir des parametres
-    void update(City c,Boolean photoUpdatable)
+    public void update(City c,Boolean photoUpdatable)
     {
         pays = c.pays;
         name = c.name;

@@ -1,4 +1,4 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.adapter;
 
 import android.net.Uri;
 import android.support.v7.widget.CardView;
@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
+
+import ig2i.travelPocket.R;
+import ig2i.travelPocket.model.City;
 
 public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> {
 
@@ -44,7 +47,7 @@ public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> 
 
     List<City> cities;
 
-    RVAWeather(List<City> cities){
+    public RVAWeather(List<City> cities){
         this.cities = cities;
     }
 
@@ -74,7 +77,7 @@ public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> 
 
     @Override
     public int getItemCount() {
-        return cities.equals(null) ? 0 : cities.size();
+        return (cities == null) ? 0 : cities.size();
     }
 
     public interface MyClickListener {

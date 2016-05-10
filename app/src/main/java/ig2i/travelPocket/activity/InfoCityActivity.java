@@ -1,4 +1,4 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -24,9 +24,16 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import ig2i.travelPocket.GlobalState;
+import ig2i.travelPocket.R;
+import ig2i.travelPocket.adapter.RVASuggestion;
+import ig2i.travelPocket.model.City;
+import ig2i.travelPocket.model.Suggestion;
+import ig2i.travelPocket.service.JSONSuggestions;
+
 public class InfoCityActivity extends Activity implements View.OnClickListener {
 
-    GlobalState gs;
+    public GlobalState gs;
 
     TextView temps;
     TextView ville;
@@ -89,8 +96,8 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
     // Fonction permettant de recuperer les suggestions
     public void setSuggestions() {
-        if(gs.prefs.contains(gs.getParamSuggest())) {
-            if(gs.isSuggestionsRefreshable()) {
+        if (gs.prefs.contains(gs.getParamSuggest())) {
+            if (gs.isSuggestionsRefreshable()) {
                 getJSONSuggestions();
             } else {
                 getPrefsSuggestions();
@@ -102,13 +109,18 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
     // Fonction permettant de recuperer les suggestions a l'aide de la classe JSONParser
     public void getJSONSuggestions() {
-        JSONSuggestions w = new JSONSuggestions(this);
-        w.execute();
+        if (gs.isConnected()) {
+            JSONSuggestions w = new JSONSuggestions(this);
+            w.execute();
+        } else {
+            gs.alerter("Veuillez verifier votre connexion");
+        }
     }
 
     // Fonction permettant de recuperer les suggestions a l'aide des shared preferences
     public void getPrefsSuggestions() {
-        Type type = new TypeToken<List<Suggestion>>() {}.getType();
+        Type type = new TypeToken<List<Suggestion>>() {
+        }.getType();
         // Deserialiser la liste des suggestions
         gs.selectedCity.suggestions = gson.fromJson(gs.prefs.getString(gs.getParamSuggest(), ""), type);
         setAdapter();
@@ -118,35 +130,35 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     // de la vue
     public void setView() {
 
-        temps = (TextView)findViewById(R.id.temps);
-        ville = (TextView)findViewById(R.id.ville);
-        currentWeather = (TextView)findViewById(R.id.currentWeather);
-        picture = (SimpleDraweeView)findViewById(R.id.picture);
+        temps = (TextView) findViewById(R.id.temps);
+        ville = (TextView) findViewById(R.id.ville);
+        currentWeather = (TextView) findViewById(R.id.currentWeather);
+        picture = (SimpleDraweeView) findViewById(R.id.picture);
 
-        dayToday = (TextView)findViewById(R.id.dayToday);
-        tempMinToday = (TextView)findViewById(R.id.tempMinToday);
-        tempMaxToday = (TextView)findViewById(R.id.tempMaxToday);
-        picToday = (SimpleDraweeView)findViewById(R.id.picToday);
+        dayToday = (TextView) findViewById(R.id.dayToday);
+        tempMinToday = (TextView) findViewById(R.id.tempMinToday);
+        tempMaxToday = (TextView) findViewById(R.id.tempMaxToday);
+        picToday = (SimpleDraweeView) findViewById(R.id.picToday);
 
-        dayDay1 = (TextView)findViewById(R.id.dayDay1);
-        tempMinDay1 = (TextView)findViewById(R.id.tempMinDay1);
-        tempMaxDay1 = (TextView)findViewById(R.id.tempMaxDay1);
-        picDay1 = (SimpleDraweeView)findViewById(R.id.picDay1);
+        dayDay1 = (TextView) findViewById(R.id.dayDay1);
+        tempMinDay1 = (TextView) findViewById(R.id.tempMinDay1);
+        tempMaxDay1 = (TextView) findViewById(R.id.tempMaxDay1);
+        picDay1 = (SimpleDraweeView) findViewById(R.id.picDay1);
 
-        dayDay2 = (TextView)findViewById(R.id.dayDay2);
-        tempMinDay2 = (TextView)findViewById(R.id.tempMinDay2);
-        tempMaxDay2 = (TextView)findViewById(R.id.tempMaxDay2);
-        picDay2 = (SimpleDraweeView)findViewById(R.id.picDay2);
+        dayDay2 = (TextView) findViewById(R.id.dayDay2);
+        tempMinDay2 = (TextView) findViewById(R.id.tempMinDay2);
+        tempMaxDay2 = (TextView) findViewById(R.id.tempMaxDay2);
+        picDay2 = (SimpleDraweeView) findViewById(R.id.picDay2);
 
-        dayDay3 = (TextView)findViewById(R.id.dayDay3);
-        tempMinDay3 = (TextView)findViewById(R.id.tempMinDay3);
-        tempMaxDay3 = (TextView)findViewById(R.id.tempMaxDay3);
-        picDay3 = (SimpleDraweeView)findViewById(R.id.picDay3);
+        dayDay3 = (TextView) findViewById(R.id.dayDay3);
+        tempMinDay3 = (TextView) findViewById(R.id.tempMinDay3);
+        tempMaxDay3 = (TextView) findViewById(R.id.tempMaxDay3);
+        picDay3 = (SimpleDraweeView) findViewById(R.id.picDay3);
 
-        dayDay4 = (TextView)findViewById(R.id.dayDay4);
-        tempMinDay4 = (TextView)findViewById(R.id.tempMinDay4);
-        tempMaxDay4 = (TextView)findViewById(R.id.tempMaxDay4);
-        picDay4 = (SimpleDraweeView)findViewById(R.id.picDay4);
+        dayDay4 = (TextView) findViewById(R.id.dayDay4);
+        tempMinDay4 = (TextView) findViewById(R.id.tempMinDay4);
+        tempMaxDay4 = (TextView) findViewById(R.id.tempMaxDay4);
+        picDay4 = (SimpleDraweeView) findViewById(R.id.picDay4);
 
         ville.setText(gs.selectedCity.name);
         temps.setText(gs.selectedCity.description);
@@ -190,21 +202,24 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     }
 
     // Fonction permettant d'initialiser la geolocalisation
-    public void  setLocation() {
+    public void setLocation() {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
 
         locationListener = new MyLocationListener();
 
         locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
 
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+                return;
+        }
         locationManager.requestLocationUpdates(LocationManager
                 .GPS_PROVIDER, 5000, 100, locationListener);
+
 
     }
 

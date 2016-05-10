@@ -2,6 +2,8 @@ package ig2i.travelPocket;
 
         import android.app.Application;
         import android.content.SharedPreferences;
+        import android.net.ConnectivityManager;
+        import android.net.NetworkInfo;
         import android.preference.PreferenceManager;
         import android.util.Log;
         import android.widget.Toast;
@@ -14,12 +16,15 @@ package ig2i.travelPocket;
         import java.util.HashSet;
         import java.util.List;
         import java.util.Set;
+        import ig2i.travelPocket.model.*;
+
+
 
 
 public class GlobalState extends Application{
-    static String tag = "MyTravelPocketDEBUG";
-    SharedPreferences prefs;
-    Gson gson;
+    public String tag = "MyTravelPocketDEBUG";
+    public SharedPreferences prefs;
+    public Gson gson;
 
     @Override
     public void onCreate() {
@@ -29,9 +34,9 @@ public class GlobalState extends Application{
         super.onCreate();
     }
 
-    List<City> cities;
-    Set<String> latlongs;
-    City selectedCity;
+    public List<City> cities;
+    public Set<String> latlongs;
+    public City selectedCity;
 
     // Fonction pour afficher un toast sur le telephone et un log dans la console pour alerter
     public void alerter(String s) {
@@ -132,6 +137,23 @@ public class GlobalState extends Application{
 
     public Boolean isPhotosUpdatable() {
         return prefs.getBoolean("updatePhoto",false);
+    }
+
+    public boolean isConnected()
+    {
+        // On vérifie si le réseau est disponible, si non on demande de verifier la connexion
+        ConnectivityManager cnMngr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cnMngr.getActiveNetworkInfo();
+
+        Boolean bStatut = false;
+        if (netInfo != null) {
+            NetworkInfo.State netState = netInfo.getState();
+            if (netState.compareTo(NetworkInfo.State.CONNECTED) == 0) {
+                bStatut = true;
+            }
+        }
+
+        return bStatut;
     }
 
 }

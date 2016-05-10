@@ -1,4 +1,4 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.adapter;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -19,9 +19,14 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
+
+import ig2i.travelPocket.GlobalState;
+import ig2i.travelPocket.R;
+import ig2i.travelPocket.model.Suggestion;
 
 public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.SuggestionViewHolder> {
 
@@ -58,7 +63,7 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
 
     GlobalState gs;
 
-    RVASuggestion(GlobalState gs) {
+    public RVASuggestion(GlobalState gs) {
         this.gs = gs;
         this.suggestions = gs.selectedCity.suggestions;
     }
@@ -77,7 +82,17 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
 
     @Override
     public void onBindViewHolder(SuggestionViewHolder suggestionViewHolder, int i) {
-        suggestionViewHolder.rating.setRating(suggestions.get(i).rating);
+
+        if (suggestions.get(i).rating != (float)0) {
+            int numStars = (int) Math.ceil((Double.valueOf(suggestions.get(i).rating)));
+            suggestionViewHolder.rating.setNumStars(numStars);
+            suggestionViewHolder.rating.setRating(suggestions.get(i).rating);
+        } else {
+            suggestionViewHolder.rating.setNumStars(0);
+            suggestionViewHolder.rating.setRating((float) 0);
+            suggestionViewHolder.rating.setVisibility(View.GONE);
+        }
+
         suggestionViewHolder.placeName.setText(suggestions.get(i).placeName);
 
         final Location depart = new Location("");
@@ -157,7 +172,8 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
                                                 "," + depart.getLongitude() + "&daddr=" + arrivee.getLatitude() +
                                                 "," + arrivee.getLongitude()));
                                 mContext.startActivity(intent);
-                            }})
+                            }
+                        })
                         .show();
             }
         });

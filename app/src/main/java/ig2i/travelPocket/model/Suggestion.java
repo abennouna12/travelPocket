@@ -1,16 +1,16 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.model;
 
 public class Suggestion {
-    Float rating;
-    String placeName;
-    String openClose;
-    String picture;
-    String phone;
-    String latitude;
-    String longitude;
-    String web;
+    public Float rating;
+    public String placeName;
+    public String openClose;
+    public String picture;
+    public String phone;
+    public String latitude;
+    public String longitude;
+    public String web;
 
-    Suggestion(){}
+    public Suggestion(){}
 
     /*Suggestion (Float rating, String placeName, String openClose, String picture,
                 String phone, String mail, String latitude, String longitude, String web) {

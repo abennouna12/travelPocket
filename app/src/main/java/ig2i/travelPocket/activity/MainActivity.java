@@ -1,4 +1,4 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +19,12 @@ import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.gson.Gson;
+
+import ig2i.travelPocket.GlobalState;
+import ig2i.travelPocket.R;
+import ig2i.travelPocket.adapter.RVAWeather;
+import ig2i.travelPocket.model.City;
+import ig2i.travelPocket.service.JSONWeatherInfo;
 
 public class MainActivity extends Activity {
 
@@ -67,7 +73,7 @@ public class MainActivity extends Activity {
 
         swipeTouchListener();
 
-        //updateEverything();
+        updateEverything();
     }
 
     @Override
@@ -236,11 +242,15 @@ public class MainActivity extends Activity {
     // Fonction permettant de mettre a jour toutes les villes
     public void updateEverything(){
 
-        if(gs.cities.size() != 0) {
-            for (City c : gs.cities) {
-                updateCity(c);
+        if (gs.isConnected()) {
+            if (gs.cities.size() != 0) {
+                for (City c : gs.cities) {
+                    updateCity(c);
+                }
+                updatePrefs();
             }
-            updatePrefs();
+        } else {
+            gs.alerter("Veuillez verifier votre connexion");
         }
 
     }

@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +28,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PreferencesActivity"
+            android:name=".activity.PreferencesActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".InfoCityActivity"
+            android:name=".activity.InfoCityActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"/>
 

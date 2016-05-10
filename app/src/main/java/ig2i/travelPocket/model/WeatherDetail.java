@@ -1,11 +1,11 @@
-package ig2i.travelPocket;
+package ig2i.travelPocket.model;
 
 public class WeatherDetail {
     // Classe d'ajout de villes
-    String date;
-    String tempMin;
-    String tempMax;
-    String icon;
+    public String date;
+    public String tempMin;
+    public String tempMax;
+    public String icon;
 
     // Constructeur
    /* WeatherDetail(String date, String tempMax, String tempMin, String icon) {
@@ -15,7 +15,7 @@ public class WeatherDetail {
         this.icon = icon;
     }
 */
-    WeatherDetail(){
+    public WeatherDetail(){
 
     }
 }
