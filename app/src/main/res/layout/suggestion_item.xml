@@ -35,7 +35,9 @@
                 android:layout_below="@+id/relativeLayoutOpenClose"
                 android:layout_above="@+id/mapIcon"
                 android:layout_alignStart="@+id/mapIcon"
-                android:layout_toStartOf="@+id/relativeLayoutOpenClose">
+                android:layout_toStartOf="@+id/relativeLayoutOpenClose"
+                android:gravity="center"
+                >
 
                 <me.grantland.widget.AutofitTextView
                     android:maxLines="3"
@@ -48,9 +50,13 @@
                     android:textSize="25sp"
                     android:fontFamily="sans-serif-light"
                     android:textStyle="normal"
-                    android:layout_alignStart="@+id/rating"
-                    android:layout_above="@+id/rating"
-                    android:layout_centerVertical="true" />
+
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    android:layout_above="@+id/rating" />
 
                 <RatingBar
                     android:id="@+id/rating"
@@ -58,9 +64,9 @@
                     android:layout_height="wrap_content"
                     android:stepSize="0.1"
                     style="@style/RatingBar"
+
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_alignParentStart="true" />
             </RelativeLayout>
 
             <RelativeLayout

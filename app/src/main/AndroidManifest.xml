@@ -13,10 +13,10 @@
 
     <application
         android:name=".GlobalState"
-        android:screenOrientation="portrait"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -24,16 +24,24 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.PreferencesActivity"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.InfoCityActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBar"/>
+            android:theme="@style/NoActionBar" />
+        <activity
+            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar"
+            android:name=".activity.SuggestActivity"
+            android:screenOrientation="portrait"/>
+
+
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

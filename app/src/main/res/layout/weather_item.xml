@@ -78,8 +78,6 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true" />
 
-
-
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

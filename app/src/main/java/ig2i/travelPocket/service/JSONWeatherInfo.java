@@ -116,7 +116,8 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
                 String FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
                         "group_id=1463451%40N25&view_all=1" +
-                        "&text=" + name +
+                        "&lat=" + latlong.split(",")[0] +
+                        "&lon=" + latlong.split(",")[1] +
                         "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027" +
                         "&format=json";
 
@@ -149,14 +150,9 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
                 } else {
 
-                    String icon = WeatherResult
-                            .getJSONObject("currently")
-                            .getString("icon")
-                            .replace("-", " ");
-
-                    FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
-                            "group_id=1463451%40N25&view_all=1" +
-                            "&text=" + icon +
+                     FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
+                            "&lat=" + latlong.split(",")[0] +
+                            "&lon=" + latlong.split(",")[1] +
                             "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027" +
                             "&format=json";
 

@@ -2,7 +2,11 @@ package ig2i.travelPocket.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,10 +14,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -22,13 +29,18 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.R;
 import ig2i.travelPocket.adapter.RVASuggestion;
+import ig2i.travelPocket.adapter.SuggestTypeAdapter;
 import ig2i.travelPocket.model.City;
 import ig2i.travelPocket.model.Suggestion;
+import ig2i.travelPocket.model.SuggestionType;
 import ig2i.travelPocket.service.JSONSuggestions;
 
 public class InfoCityActivity extends Activity implements View.OnClickListener {
@@ -96,15 +108,7 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
     // Fonction permettant de recuperer les suggestions
     public void setSuggestions() {
-        if (gs.prefs.contains(gs.getParamSuggest())) {
-            if (gs.isSuggestionsRefreshable()) {
-                getJSONSuggestions();
-            } else {
-                getPrefsSuggestions();
-            }
-        } else {
-            getJSONSuggestions();
-        }
+        getJSONSuggestions();
     }
 
     // Fonction permettant de recuperer les suggestions a l'aide de la classe JSONParser
@@ -115,15 +119,6 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         } else {
             gs.alerter("Veuillez verifier votre connexion");
         }
-    }
-
-    // Fonction permettant de recuperer les suggestions a l'aide des shared preferences
-    public void getPrefsSuggestions() {
-        Type type = new TypeToken<List<Suggestion>>() {
-        }.getType();
-        // Deserialiser la liste des suggestions
-        gs.selectedCity.suggestions = gson.fromJson(gs.prefs.getString(gs.getParamSuggest(), ""), type);
-        setAdapter();
     }
 
     // Cette fonction permet d'initialiset et de donner une valeur a tout les textviews et images
@@ -255,7 +250,6 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         setAdapter();
         // La liste des suggestions est ensuite enregistrée dans les shared preferences
         SharedPreferences.Editor editor = gs.prefs.edit();
-        editor.putString(gs.getParamSuggest(), gson.toJson(gs.selectedCity.suggestions));
         editor.apply();
     }
 
@@ -272,6 +266,13 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.picTest:
+                gs.alerter("coucou2");
+                Intent toSuggestions = new Intent(this, SuggestActivity.class);
+                startActivity(toSuggestions);
+                gs.alerter("coucou");
+
+                break;
             case R.id.retour:
                 this.finish();
                 break;

@@ -33,17 +33,14 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
     @Override
     protected City doInBackground(Void... params) {
 
-        String types = gs.getTypesList();
-
-        types = (types == "") ? "all" : types;
-
         int maxSuggestions = Integer.decode(gs.prefs.getString("maxSuggestions", "20")) - 1;
         int radius = Integer.decode(gs.prefs.getString("radius", "1")) * 1000;
+
 
         String suggestionsURL = "https://maps.googleapis.com/maps/api/place/radarsearch/json?" +
                 "location=" + result.latitude + ","+ result.longitude +
                 "&radius=" + radius +
-                "&types=" + types +
+                "&keyword=" + "kantaoui" +
                 "&key=AIzaSyD2qhsWZbP-bYq1URZEAaSY17NanvHOwbw";
 
         SuggestionsResult = SuggestionsParser.getJSONFromUrl(suggestionsURL);
@@ -84,7 +81,7 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
                         s.openClose = (PlaceResult.getJSONObject("opening_hours")
                                 .getBoolean("open_now")) ? "Ouvert" : "Fermé";
                     } else {
-                        s.openClose = "Non confirmé";
+                        s.openClose = "NC";
                     }
 
                     s.placeName = PlaceResult.getString("name");

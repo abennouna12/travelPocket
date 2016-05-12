@@ -164,6 +164,7 @@ public class RVASuggestion extends RecyclerView.Adapter<RVASuggestion.Suggestion
             public void onClick(View v) {
                 new AlertDialog.Builder(mContext)
                         .setMessage("Voulez vous vraiment ouvrir l'itineraire pour " + currentName + " sur Google Maps ?")
+
                         .setNegativeButton("Non", null)
                         .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {

@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <MultiSelectListPreference
-        android:key="placesType"
-        android:title="Préférences des suggestions"
-        android:dialogTitle="Préférences des suggestions"
-        android:summary="Choisissez le type de lieu que vous souhaiteriez voir dans les suggestions"
-        android:entries="@array/placeNames"
-        android:entryValues="@array/placeValues"
-        android:defaultValue="@array/empty_array"
-        />
-
-    <CheckBoxPreference
-        android:title="Mise à jour des suggestions"
-        android:defaultValue="false"
-        android:summary="Cliquez ici si vous voulez mettre à jour les suggestions lors de chaque chargement de ville"
-        android:key="refreshSuggestions"
-        />
-
     <CheckBoxPreference
         android:title="Mise à jour des photos"
         android:defaultValue="false"
