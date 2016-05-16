@@ -38,8 +38,10 @@
 
 
             <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/ButtonAddSuggestion"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:onClick="onClick"
                 fresco:backgroundImage="@drawable/ic_add_circle_70dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"

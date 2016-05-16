@@ -37,11 +37,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar" />
         <activity
-            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar"
             android:name=".activity.SuggestActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
 
-
+        <activity
+            android:name=".activity.AddSuggestionType"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

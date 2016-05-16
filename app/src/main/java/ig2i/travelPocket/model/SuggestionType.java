@@ -1,5 +1,7 @@
 package ig2i.travelPocket.model;
 
+import java.util.Objects;
+
 /**
  * Created by aBennouna on 11/05/2016.
  */
@@ -27,4 +29,13 @@ public class SuggestionType {
         this.checked = checked;
     }
 
+    public SuggestionType() {
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        SuggestionType suggest = (SuggestionType)o;
+        return (this.name == suggest.name) ? true : false;
+    }
 }

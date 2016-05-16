@@ -2,10 +2,7 @@ package ig2i.travelPocket.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -14,33 +11,20 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.R;
 import ig2i.travelPocket.adapter.RVASuggestion;
-import ig2i.travelPocket.adapter.SuggestTypeAdapter;
 import ig2i.travelPocket.model.City;
-import ig2i.travelPocket.model.Suggestion;
-import ig2i.travelPocket.model.SuggestionType;
 import ig2i.travelPocket.service.JSONSuggestions;
 
 public class InfoCityActivity extends Activity implements View.OnClickListener {
