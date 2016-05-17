@@ -4,22 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="450px"
+    android:layout_height="300dp"
     android:orientation="vertical"
     tools:context=".activity.SuggestActivity">
 
 
     <RelativeLayout
-        android:background="@color/green"
         android:layout_width="fill_parent"
-        android:layout_height="450px"
+        android:layout_height="300dp"
         android:orientation="vertical"
         android:id="@+id/relativeLayoutPerso">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Suggestion : "
+            android:text="Filtre : "
             android:textSize="20sp"
             android:fontFamily="sans-serif-light"
             android:id="@+id/suggestPersoText"
@@ -43,7 +42,8 @@
             android:textColor="@color/grey"
             android:layout_above="@+id/SuggestGoogleNew"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/suggestPersoText" />
+            android:layout_toEndOf="@+id/suggestPersoText"
+            android:hint="Nom du filtre"/>
 
         <ListView
             android:id="@+id/SuggestGoogleNew"

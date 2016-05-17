@@ -34,8 +34,28 @@ public class SuggestionType {
     }
 
     @Override
-    public boolean equals(Object o) {
-        SuggestionType suggest = (SuggestionType)o;
-        return (this.name == suggest.name) ? true : false;
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.name);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SuggestionType other = (SuggestionType) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
+    }
+
 }

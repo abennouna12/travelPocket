@@ -263,4 +263,9 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setSuggestions();
+    }
 }

@@ -40,7 +40,7 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
         String suggestionsURL = "https://maps.googleapis.com/maps/api/place/radarsearch/json?" +
                 "location=" + result.latitude + ","+ result.longitude +
                 "&radius=" + radius +
-                "&keyword=" + "kantaoui" +
+                "&types=" + gs.getTypesString() +
                 "&key=AIzaSyD2qhsWZbP-bYq1URZEAaSY17NanvHOwbw";
 
         SuggestionsResult = SuggestionsParser.getJSONFromUrl(suggestionsURL);

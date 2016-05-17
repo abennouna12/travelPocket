@@ -12,6 +12,7 @@ package ig2i.travelPocket;
         import com.google.gson.reflect.TypeToken;
 
         import java.lang.reflect.Type;
+        import java.util.AbstractList;
         import java.util.ArrayList;
         import java.util.HashSet;
         import java.util.List;
@@ -260,6 +261,29 @@ public class GlobalState extends Application{
         editor.putString("UserSuggestions", gson.toJson(UserSuggestions));
         editor.putString("GoogleSuggestions", gson.toJson(GoogleSuggestions));
         editor.apply();
+    }
+
+    public String getTypesString (){
+        String output = "";
+        List<SuggestionType> types = new ArrayList<>();
+        for (SuggestionType s:GoogleSuggestions) {
+            if(s.checked) {
+                if (!types.contains(s)) {
+                    types.add(s);
+                }
+            }
+        }
+        for (SuggestionType s:UserSuggestions) {
+            if(s.checked) {
+                if (!types.contains(s)) {
+                    types.add(s);
+                }
+            }
+        }
+        for(SuggestionType s:types) {
+            output = output + "|" + s.getValue();
+        }
+        return (output == "") ? "all" : output.substring(1);
     }
 
 }

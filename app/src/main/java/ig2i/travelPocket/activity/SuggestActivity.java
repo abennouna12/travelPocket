@@ -82,4 +82,11 @@ public class SuggestActivity extends Activity implements View.OnClickListener {
                 break;
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+       /* Intent toInfoCity = new Intent(this, InfoCityActivity.class);
+        startActivity(toInfoCity);*/
+    }
 }
