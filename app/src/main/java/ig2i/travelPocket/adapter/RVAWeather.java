@@ -71,7 +71,7 @@ public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> 
         cityViewHolder.name.setText(cities.get(i).name);
         cityViewHolder.pays.setText(cities.get(i).pays);
         cityViewHolder.currentWeather.setText(cities.get(i).currentWeather);
-        Uri uri = Uri.parse(cities.get(i).picture);
+        Uri uri = Uri.parse(cities.get(i).pictures.get(0).src);
         cityViewHolder.picture.setImageURI(uri);
     }
 

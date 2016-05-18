@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.R;
 import ig2i.travelPocket.adapter.RVASuggestion;
+import ig2i.travelPocket.adapter.RVAPictures;
 import ig2i.travelPocket.model.City;
 import ig2i.travelPocket.service.JSONSuggestions;
 
@@ -61,9 +62,13 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     TextView tempMaxDay4;
     SimpleDraweeView picDay4;
 
-    RVASuggestion adapter;
-    LinearLayoutManager llm;
+    RVASuggestion suggestionsAdapter;
+    LinearLayoutManager llmSuggestions;
     RecyclerView rvSuggestions;
+
+    RVAPictures picturesAdapter;
+    LinearLayoutManager llmPictures;
+    RecyclerView rvPictures;
 
     LocationManager locationManager = null;
     LocationListener locationListener = null;
@@ -80,7 +85,7 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
         gson = new Gson();
 
-        adapter = new RVASuggestion(gs);
+        suggestionsAdapter = new RVASuggestion(gs);
 
         setView();
 
@@ -112,7 +117,6 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         temps = (TextView) findViewById(R.id.temps);
         ville = (TextView) findViewById(R.id.ville);
         currentWeather = (TextView) findViewById(R.id.currentWeather);
-        picture = (SimpleDraweeView) findViewById(R.id.picture);
 
         dayToday = (TextView) findViewById(R.id.dayToday);
         tempMinToday = (TextView) findViewById(R.id.tempMinToday);
@@ -142,8 +146,6 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         ville.setText(gs.selectedCity.name);
         temps.setText(gs.selectedCity.description);
         currentWeather.setText(gs.selectedCity.currentWeather);
-        Uri uri = Uri.parse(gs.selectedCity.picture);
-        picture.setImageURI(uri);
 
         dayToday.setText(gs.selectedCity.daily.get(0).date);
         dayDay1.setText(gs.selectedCity.daily.get(1).date);
@@ -214,7 +216,7 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
             // Apres avoir enregistrer la nouvelle position actuelle, les suggestions seront
             // rechargées afin d'afficher la nouvelle distance entre la suggestion et l'emplacement
             // actuel
-            adapter.notifyDataSetChanged();
+            suggestionsAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -239,23 +241,27 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
     // Fonction permettant d'initialiser le recyclerview
     public void setAdapter() {
-        rvSuggestions=(RecyclerView)findViewById(R.id.rvSuggestions);
-        llm = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        rvSuggestions.setLayoutManager(llm);
+        rvSuggestions = (RecyclerView)findViewById(R.id.rvSuggestions);
+        llmSuggestions = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        rvSuggestions.setLayoutManager(llmSuggestions);
         rvSuggestions.setHasFixedSize(true);
-        adapter = new RVASuggestion(gs);
-        rvSuggestions.setAdapter(adapter);
+        suggestionsAdapter = new RVASuggestion(gs);
+        rvSuggestions.setAdapter(suggestionsAdapter);
+
+        rvPictures = (RecyclerView)findViewById(R.id.rvPictures);
+        llmPictures = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        rvPictures.setLayoutManager(llmPictures);
+        rvSuggestions.setHasFixedSize(true);
+        picturesAdapter = new RVAPictures(gs.selectedCity.pictures);
+        rvPictures.setAdapter(picturesAdapter);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.picTest:
-                gs.alerter("coucou2");
                 Intent toSuggestions = new Intent(this, SuggestActivity.class);
                 startActivity(toSuggestions);
-                gs.alerter("coucou");
-
                 break;
             case R.id.retour:
                 this.finish();

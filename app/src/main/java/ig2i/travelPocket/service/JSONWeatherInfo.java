@@ -13,6 +13,7 @@ import java.util.Date;
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.activity.MainActivity;
 import ig2i.travelPocket.model.City;
+import ig2i.travelPocket.model.PictureInfo;
 import ig2i.travelPocket.model.WeatherDetail;
 
 
@@ -54,6 +55,8 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
 
         try {
+
+            int maxPictures = 0;
 
             String currentWeather = WeatherResult
                     .getJSONObject("currently")
@@ -139,13 +142,39 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
                 if (total > 0) {
 
                     photos = obj.getJSONArray("photo");
-                    photo = photos.getJSONObject(gs.random(0, photos.length()));
+                    result.pictures = new ArrayList<>();
 
-                    // Recuperer les données de l'image
-                    id = photo.getString("id");
-                    secret = photo.getString("secret");
-                    server = photo.getString("server");
-                    farm = photo.getString("farm");
+                    maxPictures = (photos.length() <= 5) ? photos.length() : 5;
+
+                    for(int i = 0 ; i < maxPictures ; i++) {
+
+                        photo = photos.getJSONObject(i);
+
+                        // Recuperer les données de l'image
+                        id = photo.getString("id");
+                        secret = photo.getString("secret");
+                        server = photo.getString("server");
+                        farm = photo.getString("farm");
+
+
+                        PictureInfo picture = new PictureInfo();
+
+                        String photoDetail = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo" +
+                                "&photo_id=" + id +
+                                "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027&format=json";
+
+
+                        JSONObject pictureDetails = FlickrParser.getJSONFromUrlFlickr(photoDetail).getJSONObject("photo");
+
+                        picture.author = pictureDetails.getJSONObject("owner").getString("username");
+                        picture.description = pictureDetails.getJSONObject("description").getString("_content");
+                        picture.takenOn = new Date(pictureDetails.getJSONObject("dates").getLong("posted")*1000);
+                        picture.src = "https://farm" + farm + ".staticflickr.com/"
+                                + server + "/" + id + "_" + secret + ".jpg";
+
+                        result.pictures.add(picture);
+
+                    }
 
 
                 } else {
@@ -161,18 +190,56 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
                     obj = FlickrResult.getJSONObject("photos");
 
                     photos = obj.getJSONArray("photo");
-                    photo = photos.getJSONObject(gs.random(0, photos.length()));
 
-                    // Recuperer les données de l'image
-                    id = photo.getString("id");
-                    secret = photo.getString("secret");
-                    server = photo.getString("server");
-                    farm = photo.getString("farm");
+                    maxPictures = (photos.length() <= 5) ? photos.length() : 5;
+
+                    result.pictures = new ArrayList<>();
+
+                    for(int i = 0 ; i < maxPictures ; i++) {
+
+                        photo = photos.getJSONObject(i);
+
+                        // Recuperer les données de l'image
+                        id = photo.getString("id");
+                        secret = photo.getString("secret");
+                        server = photo.getString("server");
+                        farm = photo.getString("farm");
+
+                        PictureInfo picture = new PictureInfo();
+
+                        String photoDetail = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo" +
+                                "&photo_id=" + id +
+                                "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027&format=json";
+
+
+                        JSONObject pictureDetails = FlickrParser.getJSONFromUrlFlickr(photoDetail).getJSONObject("photo");
+
+                        if(pictureDetails.getJSONObject("owner").has("username")) {
+                            picture.author = pictureDetails.getJSONObject("owner").getString("username");
+                        } else {
+                            picture.author = "";
+                        }
+
+                        if(pictureDetails.getJSONObject("description").has("_content")) {
+                            picture.description = pictureDetails.getJSONObject("description").getString("_content");
+                        } else {
+                            picture.description = "";
+                        }
+
+                        if(pictureDetails.getJSONObject("dates").has("posted")) {
+                            picture.takenOn = new Date(pictureDetails.getJSONObject("dates").getLong("posted")*1000);
+                        } else {
+                            picture.takenOn = null;
+                        }
+
+                        picture.src = "https://farm" + farm + ".staticflickr.com/"
+                                + server + "/" + id + "_" + secret + ".jpg";
+
+                        result.pictures.add(picture);
+
+                    }
+
                 }
-
-                result.picture = "https://farm" + farm + ".staticflickr.com/"
-                        + server + "/" + id + "_" + secret + ".jpg";
-
             }
 
             result.pays = pays;

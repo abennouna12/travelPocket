@@ -97,7 +97,7 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
                     } else {
                         // Si google places ne nous fournit pas de photos, on récupere la photos de
                         // la meteo
-                        s.picture = result.picture;
+                        s.picture = result.pictures.get(0).src;
                     }
 
                     s.phone = (PlaceResult.has("international_phone_number")) ?

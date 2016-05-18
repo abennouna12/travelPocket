@@ -7,7 +7,7 @@ public class City {
     public String pays;
     public String name;
     public String currentWeather;
-    public String picture;
+    public List<PictureInfo> pictures;
     public String description;
     public String latitude;
     public String longitude;
@@ -39,7 +39,7 @@ public class City {
         name = c.name;
         currentWeather = c.currentWeather;
         if (photoUpdatable) {
-            picture = c.picture;
+            pictures = c.pictures;
         }
         description = c.description;
         latitude = c.latitude;
