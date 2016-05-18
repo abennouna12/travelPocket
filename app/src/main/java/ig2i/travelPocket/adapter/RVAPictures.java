@@ -26,11 +26,9 @@ public class RVAPictures extends RecyclerView.Adapter<RVAPictures.PictureViewHol
         AutofitTextView description;
         TextView date;
         ImageView picture;
-        CardView cv_picture;
 
         public PictureViewHolder(View itemView) {
             super(itemView);
-            cv_picture = (CardView)itemView.findViewById(R.id.cv_picture);
             description = (AutofitTextView)itemView.findViewById(R.id.PictureDescription);
             author = (TextView)itemView.findViewById(R.id.PictureAuthor);
             date = (TextView)itemView.findViewById(R.id.PictureDate);

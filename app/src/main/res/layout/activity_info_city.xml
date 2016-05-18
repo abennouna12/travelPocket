@@ -17,10 +17,10 @@
         android:orientation="vertical"
         android:id="@+id/relativeLayout">
 
-        <android.support.v7.widget.RecyclerView
+        <android.support.v4.view.ViewPager
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/rvPictures"
+            android:id="@+id/ViewPagerPictures"
             android:layout_alignParentBottom="true" />
 
         <com.facebook.drawee.view.SimpleDraweeView
@@ -465,40 +465,63 @@
         android:layout_width="fill_parent"
         android:layout_height="0px">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="SUGGESTIONS"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-light"
-            android:id="@+id/suggestionText"
-            android:textColor="@color/grey"
-            android:textStyle="normal"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"/>
+            android:id="@+id/RLSuggestionHeader">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SUGGESTIONS"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/suggestionText"
+                android:textColor="@color/grey"
+                android:textStyle="normal"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="1dp"/>
+
+            <me.grantland.widget.AutofitTextView
+                android:maxLines="1"
+                android:singleLine="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filters"
+                android:textSize="10sp"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/filterText"
+                android:textColor="@color/grey"
+                android:textStyle="italic"
+                android:layout_below="@+id/suggestionText"
+                android:layout_alignStart="@+id/suggestionText"
+                android:paddingTop="2dp"
+                android:paddingBottom="5dp" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/picTest"
+                android:onClick="onClick"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                fresco:backgroundImage="@drawable/ic_filter"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp" />
+        </RelativeLayout>
 
 
-        <android.support.v7.widget.RecyclerView
+        <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rvSuggestions"
-            android:layout_below="@+id/suggestionText"
+            android:id="@+id/ViewPagerSuggestions"
+            android:layout_below="@+id/RLSuggestionHeader"
             android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"/>
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/picTest"
-            android:onClick="onClick"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:scaleType="centerCrop"
-            fresco:backgroundImage="@drawable/ic_add_24dp"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/suggestionText"
-            android:layout_above="@+id/rvSuggestions" />
 
 
     </RelativeLayout>

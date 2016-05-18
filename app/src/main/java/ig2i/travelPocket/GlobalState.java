@@ -78,102 +78,96 @@ public class GlobalState extends Application{
     public List<SuggestionType> getVirginSuggestions() {
 
         List<SuggestionType> suggests = new ArrayList<>();
-        suggests.add(new SuggestionType("accounting","accounting",false));
-        suggests.add(new SuggestionType("airport","airport",false));
-        suggests.add(new SuggestionType("amusement_park","amusement_park",false));
-        suggests.add(new SuggestionType("aquarium","aquarium",false));
-        suggests.add(new SuggestionType("art_gallery","art_gallery",false));
-        suggests.add(new SuggestionType("atm","atm",false));
-        suggests.add(new SuggestionType("bakery","bakery",false));
-        suggests.add(new SuggestionType("bank","bank",false));
-        suggests.add(new SuggestionType("bar","bar",false));
-        suggests.add(new SuggestionType("beauty_salon","beauty_salon",false));
-        suggests.add(new SuggestionType("bicycle_store","bicycle_store",false));
-        suggests.add(new SuggestionType("book_store","book_store",false));
-        suggests.add(new SuggestionType("bowling_alley","bowling_alley",false));
-        suggests.add(new SuggestionType("bus_station","bus_station",false));
-        suggests.add(new SuggestionType("cafe","cafe",false));
-        suggests.add(new SuggestionType("campground","campground",false));
-        suggests.add(new SuggestionType("car_dealer","car_dealer",false));
-        suggests.add(new SuggestionType("car_rental","car_rental",false));
-        suggests.add(new SuggestionType("car_repair","car_repair",false));
-        suggests.add(new SuggestionType("car_wash","car_wash",false));
-        suggests.add(new SuggestionType("casino","casino",false));
-        suggests.add(new SuggestionType("cemetery","cemetery",false));
-        suggests.add(new SuggestionType("church","church",false));
-        suggests.add(new SuggestionType("city_hall","city_hall",false));
-        suggests.add(new SuggestionType("clothing_store","clothing_store",false));
-        suggests.add(new SuggestionType("convenience_store","convenience_store",false));
-        suggests.add(new SuggestionType("courthouse","courthouse",false));
-        suggests.add(new SuggestionType("dentist","dentist",false));
-        suggests.add(new SuggestionType("department_store","department_store",false));
-        suggests.add(new SuggestionType("doctor","doctor",false));
-        suggests.add(new SuggestionType("electrician","electrician",false));
-        suggests.add(new SuggestionType("electronics_store","electronics_store",false));
-        suggests.add(new SuggestionType("embassy","embassy",false));
-        suggests.add(new SuggestionType("establishment","establishment",false));
-        suggests.add(new SuggestionType("finance","finance",false));
-        suggests.add(new SuggestionType("fire_station","fire_station",false));
-        suggests.add(new SuggestionType("florist","florist",false));
-        suggests.add(new SuggestionType("food","food",false));
-        suggests.add(new SuggestionType("funeral_home","funeral_home",false));
-        suggests.add(new SuggestionType("furniture_store","furniture_store",false));
-        suggests.add(new SuggestionType("gas_station","gas_station",false));
-        suggests.add(new SuggestionType("general_contractor","general_contractor",false));
-        suggests.add(new SuggestionType("grocery_or_supermarket","grocery_or_supermarket",false));
-        suggests.add(new SuggestionType("gym","gym",false));
-        suggests.add(new SuggestionType("hair_care","hair_care",false));
-        suggests.add(new SuggestionType("hardware_store","hardware_store",false));
-        suggests.add(new SuggestionType("health","health",false));
-        suggests.add(new SuggestionType("hindu_temple","hindu_temple",false));
-        suggests.add(new SuggestionType("home_goods_store","home_goods_store",false));
-        suggests.add(new SuggestionType("hospital","hospital",false));
-        suggests.add(new SuggestionType("insurance_agency","insurance_agency",false));
-        suggests.add(new SuggestionType("jewelry_store","jewelry_store",false));
-        suggests.add(new SuggestionType("laundry","laundry",false));
-        suggests.add(new SuggestionType("lawyer","lawyer",false));
-        suggests.add(new SuggestionType("library","library",false));
-        suggests.add(new SuggestionType("liquor_store","liquor_store",false));
-        suggests.add(new SuggestionType("local_government_office","local_government_office",false));
-        suggests.add(new SuggestionType("locksmith","locksmith",false));
-        suggests.add(new SuggestionType("lodging","lodging",false));
-        suggests.add(new SuggestionType("meal_delivery","meal_delivery",false));
-        suggests.add(new SuggestionType("meal_takeaway","meal_takeaway",false));
-        suggests.add(new SuggestionType("mosque","mosque",false));
-        suggests.add(new SuggestionType("movie_rental","movie_rental",false));
-        suggests.add(new SuggestionType("movie_theater","movie_theater",false));
-        suggests.add(new SuggestionType("moving_company","moving_company",false));
-        suggests.add(new SuggestionType("museum","museum",false));
-        suggests.add(new SuggestionType("night_club","night_club",false));
-        suggests.add(new SuggestionType("painter","painter",false));
-        suggests.add(new SuggestionType("park","park",false));
-        suggests.add(new SuggestionType("parking","parking",false));
-        suggests.add(new SuggestionType("pet_store","pet_store",false));
-        suggests.add(new SuggestionType("pharmacy","pharmacy",false));
-        suggests.add(new SuggestionType("physiotherapist","physiotherapist",false));
-        suggests.add(new SuggestionType("place_of_worship","place_of_worship",false));
-        suggests.add(new SuggestionType("plumber","plumber",false));
-        suggests.add(new SuggestionType("police","police",false));
-        suggests.add(new SuggestionType("post_office","post_office",false));
-        suggests.add(new SuggestionType("real_estate_agency","real_estate_agency",false));
-        suggests.add(new SuggestionType("restaurant","restaurant",false));
-        suggests.add(new SuggestionType("roofing_contractor","roofing_contractor",false));
-        suggests.add(new SuggestionType("rv_park","rv_park",false));
-        suggests.add(new SuggestionType("school","school",false));
-        suggests.add(new SuggestionType("shoe_store","shoe_store",false));
-        suggests.add(new SuggestionType("shopping_mall","shopping_mall",false));
-        suggests.add(new SuggestionType("spa","spa",false));
-        suggests.add(new SuggestionType("stadium","stadium",false));
-        suggests.add(new SuggestionType("storage","storage",false));
-        suggests.add(new SuggestionType("store","store",false));
-        suggests.add(new SuggestionType("subway_station","subway_station",false));
-        suggests.add(new SuggestionType("synagogue","synagogue",false));
-        suggests.add(new SuggestionType("taxi_stand","taxi_stand",false));
-        suggests.add(new SuggestionType("train_station","train_station",false));
-        suggests.add(new SuggestionType("travel_agency","travel_agency",false));
-        suggests.add(new SuggestionType("university","university",false));
-        suggests.add(new SuggestionType("veterinary_care","veterinary_care",false));
-        suggests.add(new SuggestionType("zoo","zoo",false));
+        suggests.add(new SuggestionType("Finance","accounting",false));
+        suggests.add(new SuggestionType("Aéroport","airport",false));
+        suggests.add(new SuggestionType("Parc d'attraction","amusement_park",false));
+        suggests.add(new SuggestionType("Aquarium","aquarium",false));
+        suggests.add(new SuggestionType("Galerie d'art","art_gallery",false));
+        suggests.add(new SuggestionType("Guichet automatique","atm",false));
+        suggests.add(new SuggestionType("Boulangerie","bakery",false));
+        suggests.add(new SuggestionType("Banque","bank",false));
+        suggests.add(new SuggestionType("Bar","bar",false));
+        suggests.add(new SuggestionType("Salon de beauté","beauty_salon",false));
+        suggests.add(new SuggestionType("Magasin de vélo","bicycle_store",false));
+        suggests.add(new SuggestionType("Librairie","book_store",false));
+        suggests.add(new SuggestionType("Bowling","bowling_alley",false));
+        suggests.add(new SuggestionType("Station de bus","bus_station",false));
+        suggests.add(new SuggestionType("Café","cafe",false));
+        suggests.add(new SuggestionType("Camping","campground",false));
+        suggests.add(new SuggestionType("Concessionnaire","car_dealer",false));
+        suggests.add(new SuggestionType("Location de voiture","car_rental",false));
+        suggests.add(new SuggestionType("Réparation automobile","car_repair",false));
+        suggests.add(new SuggestionType("Lave-auto","car_wash",false));
+        suggests.add(new SuggestionType("Casino","casino",false));
+        suggests.add(new SuggestionType("Cimetière","cemetery",false));
+        suggests.add(new SuggestionType("Eglise","church",false));
+        suggests.add(new SuggestionType("Mairie","city_hall",false));
+        suggests.add(new SuggestionType("Magasin de vêtements","clothing_store",false));
+        suggests.add(new SuggestionType("Tribunal","courthouse",false));
+        suggests.add(new SuggestionType("Dentiste","dentist",false));
+        suggests.add(new SuggestionType("Médecin","doctor",false));
+        suggests.add(new SuggestionType("Electricien","electrician",false));
+        suggests.add(new SuggestionType("Magasin d'électronique","electronics_store",false));
+        suggests.add(new SuggestionType("Embassade","embassy",false));
+        suggests.add(new SuggestionType("Finance","finance",false));
+        suggests.add(new SuggestionType("Caserne de pompiers","fire_station",false));
+        suggests.add(new SuggestionType("Fleuriste","florist",false));
+        suggests.add(new SuggestionType("Maison funéraire","funeral_home",false));
+        suggests.add(new SuggestionType("Magasin de meubles","furniture_store",false));
+        suggests.add(new SuggestionType("Station-essence","gas_station",false));
+        suggests.add(new SuggestionType("Entrepreneur général","general_contractor",false));
+        suggests.add(new SuggestionType("Epicerie ou Supermarché","grocery_or_supermarket",false));
+        suggests.add(new SuggestionType("Gym","gym",false));
+        suggests.add(new SuggestionType("Soin des cheveux","hair_care",false));
+        suggests.add(new SuggestionType("Quincaillerie","hardware_store",false));
+        suggests.add(new SuggestionType("Santé","health",false));
+        suggests.add(new SuggestionType("Temple indien","hindu_temple",false));
+        suggests.add(new SuggestionType("Hôpital","hospital",false));
+        suggests.add(new SuggestionType("Agence d'assurance","insurance_agency",false));
+        suggests.add(new SuggestionType("Bijouterie","jewelry_store",false));
+        suggests.add(new SuggestionType("Blanchisserie","laundry",false));
+        suggests.add(new SuggestionType("Avocat","lawyer",false));
+        suggests.add(new SuggestionType("Bibliothèque","library",false));
+        suggests.add(new SuggestionType("Magasin d'alcool","liquor_store",false));
+        suggests.add(new SuggestionType("Bureau local du gouvernement","local_government_office",false));
+        suggests.add(new SuggestionType("Serrurier","locksmith",false));
+        suggests.add(new SuggestionType("Hébergement","lodging",false));
+        suggests.add(new SuggestionType("Livraison de repas","meal_delivery",false));
+        suggests.add(new SuggestionType("Repas à emporter","meal_takeaway",false));
+        suggests.add(new SuggestionType("Mosquée","mosque",false));
+        suggests.add(new SuggestionType("Location de films","movie_rental",false));
+        suggests.add(new SuggestionType("Cinéma","movie_theater",false));
+        suggests.add(new SuggestionType("Entreprise de déménagement","moving_company",false));
+        suggests.add(new SuggestionType("Musée","museum",false));
+        suggests.add(new SuggestionType("Boîte de nuit","night_club",false));
+        suggests.add(new SuggestionType("Peintre","painter",false));
+        suggests.add(new SuggestionType("Parc","park",false));
+        suggests.add(new SuggestionType("Parking","parking",false));
+        suggests.add(new SuggestionType("Animalerie","pet_store",false));
+        suggests.add(new SuggestionType("Pharmacie","pharmacy",false));
+        suggests.add(new SuggestionType("Physiothérapeute","physiotherapist",false));
+        suggests.add(new SuggestionType("Lieu de culte","place_of_worship",false));
+        suggests.add(new SuggestionType("Plombier","plumber",false));
+        suggests.add(new SuggestionType("Police","police",false));
+        suggests.add(new SuggestionType("Bureau de poste","post_office",false));
+        suggests.add(new SuggestionType("Agence immobilière","real_estate_agency",false));
+        suggests.add(new SuggestionType("Restaurant","restaurant",false));
+        suggests.add(new SuggestionType("Couvreur","roofing_contractor",false));
+        suggests.add(new SuggestionType("Ecole","school",false));
+        suggests.add(new SuggestionType("Magasin de chaussures","shoe_store",false));
+        suggests.add(new SuggestionType("Centre commercial","shopping_mall",false));
+        suggests.add(new SuggestionType("Spa","spa",false));
+        suggests.add(new SuggestionType("Stade","stadium",false));
+        suggests.add(new SuggestionType("Stockage","storage",false));
+        suggests.add(new SuggestionType("Magasin","store",false));
+        suggests.add(new SuggestionType("Station de métro","subway_station",false));
+        suggests.add(new SuggestionType("Synagogue","synagogue",false));
+        suggests.add(new SuggestionType("Station de taxi","taxi_stand",false));
+        suggests.add(new SuggestionType("Gare de train","train_station",false));
+        suggests.add(new SuggestionType("Agence de voyage","travel_agency",false));
+        suggests.add(new SuggestionType("Université","university",false));
+        suggests.add(new SuggestionType("Soins vétérinaires","veterinary_care",false));
+        suggests.add(new SuggestionType("Zoo","zoo",false));
         return suggests;
     }
 
@@ -263,8 +257,7 @@ public class GlobalState extends Application{
         editor.apply();
     }
 
-    public String getTypesString (){
-        String output = "";
+    public List<SuggestionType> getTypes() {
         List<SuggestionType> types = new ArrayList<>();
         for (SuggestionType s:GoogleSuggestions) {
             if(s.checked) {
@@ -280,10 +273,40 @@ public class GlobalState extends Application{
                 }
             }
         }
-        for(SuggestionType s:types) {
+        return types;
+    }
+
+    public String getTypesStringNames (){
+        String output = "";
+        for(SuggestionType s:getTypes()) {
+            output = output + "," + s.getName();
+        }
+        return (output == "") ? "" : output.substring(1);
+    }
+
+    public String getTypesStringValues (){
+        String output = "";
+        for(SuggestionType s:getTypes()) {
             output = output + "|" + s.getValue();
         }
         return (output == "") ? "all" : output.substring(1);
+    }
+
+    public String getFilterNames() {
+        String [] names = getTypesStringNames().split(",");
+        switch (names.length) {
+            case 0:
+                return "All filters";
+            case 1:
+                return names[0];
+            case 2:
+                return names[0] + ", " + names[1];
+            case 3:
+                return names[0] + ", " + names[1] + ", " + names[2];
+            default:
+                return names[0] + ", " + names[1] + ", " + names[2] + ", ...";
+
+        }
     }
 
 }

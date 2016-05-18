@@ -40,7 +40,6 @@
             android:name=".activity.SuggestActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
-
         <activity
             android:name=".activity.AddSuggestionType"
             android:screenOrientation="portrait"

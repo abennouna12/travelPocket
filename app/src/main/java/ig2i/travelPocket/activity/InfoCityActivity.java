@@ -9,12 +9,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -23,10 +22,11 @@ import com.google.gson.Gson;
 
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.R;
-import ig2i.travelPocket.adapter.RVASuggestion;
-import ig2i.travelPocket.adapter.RVAPictures;
+import ig2i.travelPocket.adapter.PVAPictures;
+import ig2i.travelPocket.adapter.PVASuggestions;
 import ig2i.travelPocket.model.City;
 import ig2i.travelPocket.service.JSONSuggestions;
+import me.grantland.widget.AutofitTextView;
 
 public class InfoCityActivity extends Activity implements View.OnClickListener {
 
@@ -35,7 +35,6 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     TextView temps;
     TextView ville;
     TextView currentWeather;
-    SimpleDraweeView picture;
 
     TextView dayToday;
     TextView tempMinToday;
@@ -62,16 +61,14 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     TextView tempMaxDay4;
     SimpleDraweeView picDay4;
 
-    RVASuggestion suggestionsAdapter;
-    LinearLayoutManager llmSuggestions;
-    RecyclerView rvSuggestions;
-
-    RVAPictures picturesAdapter;
-    LinearLayoutManager llmPictures;
-    RecyclerView rvPictures;
+    ViewPager viewPagerPictures, viewPagerSuggestions;
+    PVASuggestions suggestAdapter;
+    PVAPictures picturesAdapter;
 
     LocationManager locationManager = null;
     LocationListener locationListener = null;
+
+    AutofitTextView filterText;
 
     Gson gson;
 
@@ -85,15 +82,13 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
         gson = new Gson();
 
-        suggestionsAdapter = new RVASuggestion(gs);
-
         setView();
-
+        setAdapter();
         setSuggestions();
-
         setLocation();
 
     }
+
 
     // Fonction permettant de recuperer les suggestions
     public void setSuggestions() {
@@ -143,6 +138,8 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         tempMaxDay4 = (TextView) findViewById(R.id.tempMaxDay4);
         picDay4 = (SimpleDraweeView) findViewById(R.id.picDay4);
 
+        filterText = (AutofitTextView) findViewById(R.id.filterText);
+
         ville.setText(gs.selectedCity.name);
         temps.setText(gs.selectedCity.description);
         currentWeather.setText(gs.selectedCity.currentWeather);
@@ -180,6 +177,8 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         picDay4.setImageDrawable(getResources().getDrawable(getResources().
                 getIdentifier("@drawable/" +
                         gs.selectedCity.daily.get(4).icon, null, getPackageName())));
+
+        filterText.setText(gs.getFilterNames());
     }
 
     // Fonction permettant d'initialiser la geolocalisation
@@ -216,7 +215,7 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
             // Apres avoir enregistrer la nouvelle position actuelle, les suggestions seront
             // rechargées afin d'afficher la nouvelle distance entre la suggestion et l'emplacement
             // actuel
-            suggestionsAdapter.notifyDataSetChanged();
+            suggestAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -241,19 +240,13 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
     // Fonction permettant d'initialiser le recyclerview
     public void setAdapter() {
-        rvSuggestions = (RecyclerView)findViewById(R.id.rvSuggestions);
-        llmSuggestions = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        rvSuggestions.setLayoutManager(llmSuggestions);
-        rvSuggestions.setHasFixedSize(true);
-        suggestionsAdapter = new RVASuggestion(gs);
-        rvSuggestions.setAdapter(suggestionsAdapter);
+        viewPagerSuggestions = (ViewPager) findViewById(R.id.ViewPagerSuggestions);
+        suggestAdapter = new PVASuggestions(this, gs);
+        viewPagerSuggestions.setAdapter(suggestAdapter);
 
-        rvPictures = (RecyclerView)findViewById(R.id.rvPictures);
-        llmPictures = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        rvPictures.setLayoutManager(llmPictures);
-        rvSuggestions.setHasFixedSize(true);
-        picturesAdapter = new RVAPictures(gs.selectedCity.pictures);
-        rvPictures.setAdapter(picturesAdapter);
+        viewPagerPictures = (ViewPager) findViewById(R.id.ViewPagerPictures);
+        picturesAdapter = new PVAPictures(this, gs);
+        viewPagerPictures.setAdapter(picturesAdapter);
     }
 
     @Override
@@ -273,5 +266,6 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         setSuggestions();
+        filterText.setText(gs.getFilterNames());
     }
 }
