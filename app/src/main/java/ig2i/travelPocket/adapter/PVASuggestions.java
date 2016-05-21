@@ -25,18 +25,14 @@ import java.util.List;
 
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.R;
-import ig2i.travelPocket.model.PictureInfo;
 import ig2i.travelPocket.model.Suggestion;
 
-/**
- * Created by aBennouna on 18/05/2016.
- */
 public class PVASuggestions extends PagerAdapter {
 
     Context mContext;
     GlobalState gs;
     List<Suggestion> suggestions;
-    private LayoutInflater layoutInflater;
+    LayoutInflater layoutInflater;
 
     TextView placeName;
     RatingBar rating;
@@ -62,7 +58,7 @@ public class PVASuggestions extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == (RelativeLayout)object;
+        return view == object;
     }
 
     @Override

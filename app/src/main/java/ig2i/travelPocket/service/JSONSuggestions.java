@@ -47,11 +47,12 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
 
         try {
 
+            result.suggestions = new ArrayList<>();
+
             if(SuggestionsResult.getString("status").equals("OK")) {
 
                 JSONArray suggestions = SuggestionsResult.getJSONArray("results");
 
-                result.suggestions = new ArrayList<>();
 
                 // Si la liste des suggestions fournie par google contient moins d'elements que
                 // le nombre de suggestions voulues, on ne fourni que le nombre de suggestions

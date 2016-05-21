@@ -22,7 +22,7 @@ public class SuggestTypeAdapter extends ArrayAdapter<SuggestionType>{
     GlobalState gs;
     Boolean isDeletable;
     public SuggestTypeAdapter(GlobalState gs,Context context, List<SuggestionType> resource, Boolean isDeletable) {
-        super(context,R.layout.suggestion_type,resource);
+        super(context,R.layout.filter_item,resource);
         this.context = context;
         this.types = resource;
         this.gs = gs;
@@ -31,7 +31,7 @@ public class SuggestTypeAdapter extends ArrayAdapter<SuggestionType>{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-        convertView = inflater.inflate(R.layout.suggestion_type, parent, false);
+        convertView = inflater.inflate(R.layout.filter_item, parent, false);
         CheckBox cb = (CheckBox) convertView.findViewById(R.id.CheckboxSuggestType);
         ImageView delete = (ImageView) convertView.findViewById(R.id.deleteSuggestButton);
         if (isDeletable) {

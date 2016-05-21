@@ -294,9 +294,12 @@ public class GlobalState extends Application{
 
     public String getFilterNames() {
         String [] names = getTypesStringNames().split(",");
+        if(getTypesStringNames() == "") {
+            return "Tout les filtres";
+        }
         switch (names.length) {
             case 0:
-                return "All filters";
+                return "Tout les filtres";
             case 1:
                 return names[0];
             case 2:

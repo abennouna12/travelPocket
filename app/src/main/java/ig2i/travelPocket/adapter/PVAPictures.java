@@ -1,49 +1,32 @@
 package ig2i.travelPocket.adapter;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Location;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.R;
 import ig2i.travelPocket.model.PictureInfo;
-import ig2i.travelPocket.model.Suggestion;
 import me.grantland.widget.AutofitTextView;
 
-/**
- * Created by aBennouna on 18/05/2016.
- */
 public class PVAPictures extends PagerAdapter {
 
     Context mContext;
     GlobalState gs;
     List<PictureInfo> pictures;
-    private LayoutInflater layoutInflater;
+    LayoutInflater layoutInflater;
 
     TextView author;
     AutofitTextView description;
@@ -64,7 +47,7 @@ public class PVAPictures extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == (RelativeLayout)object;
+        return view == object;
     }
 
     @Override
@@ -76,8 +59,8 @@ public class PVAPictures extends PagerAdapter {
         author = (TextView)itemView.findViewById(R.id.PictureAuthor);
         date = (TextView)itemView.findViewById(R.id.PictureDate);
         picture = (SimpleDraweeView)itemView.findViewById(R.id.PictureSrc);
-
-        author.setText("© " + pictures.get(i).author);
+        String copyright = "© " + pictures.get(i).author;
+        author.setText(copyright);
         //description.setText(pictures.get(i).description);
         description.setText("");
 

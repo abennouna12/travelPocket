@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
@@ -31,7 +32,8 @@ public class MainActivity extends Activity {
     GlobalState gs;
 
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
-    private RecyclerView rvCities;
+    RecyclerView rvCities;
+    ImageView pictureNoCity;
     String city;
     String pays;
     String latlong;
@@ -48,6 +50,9 @@ public class MainActivity extends Activity {
 
         gs = (GlobalState) getApplication();
         refreshBttn = (MenuItem) findViewById(R.id.action_refresh);
+
+        pictureNoCity = (ImageView) findViewById(R.id.pictureNoCity);
+        pictureNoCity.setImageResource(R.drawable.no_weather_image);
 
         rvCities = (RecyclerView) findViewById(R.id.rvCities);
 
@@ -81,6 +86,16 @@ public class MainActivity extends Activity {
         super.onStart();
     }
 
+    public void handleIfRecylerIsEmpty(){
+        if(gs.cities.isEmpty()) {
+            rvCities.setVisibility(View.GONE);
+            pictureNoCity.setVisibility(View.VISIBLE);
+        } else {
+            rvCities.setVisibility(View.VISIBLE);
+            pictureNoCity.setVisibility(View.GONE);
+        }
+    }
+
     // Fonction pour aller a l'activité InfoCityActivity
     private void goToInfoCity(){
         Intent toInfoCity = new Intent(this, InfoCityActivity.class);
@@ -91,11 +106,13 @@ public class MainActivity extends Activity {
     private void initializeAdapter(){
         adapter = new RVAWeather(gs.cities);
         rvCities.setAdapter(adapter);
+        handleIfRecylerIsEmpty();
     }
 
     // Fonction pour mettre a jour l'adapter
     private void majAdapter(){
         adapter.notifyDataSetChanged();
+        handleIfRecylerIsEmpty();
     }
 
     @Override

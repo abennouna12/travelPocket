@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -32,38 +32,27 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
     public GlobalState gs;
 
-    TextView temps;
-    TextView ville;
-    TextView currentWeather;
+    TextView temps, ville, currentWeather;
 
-    TextView dayToday;
-    TextView tempMinToday;
-    TextView tempMaxToday;
+    TextView dayToday, tempMinToday, tempMaxToday;
     SimpleDraweeView picToday;
 
-    TextView dayDay1;
-    TextView tempMinDay1;
-    TextView tempMaxDay1;
+    TextView dayDay1, tempMinDay1, tempMaxDay1;
     SimpleDraweeView picDay1;
 
-    TextView dayDay2;
-    TextView tempMinDay2;
-    TextView tempMaxDay2;
+    TextView dayDay2, tempMinDay2, tempMaxDay2;
     SimpleDraweeView picDay2;
 
-    TextView dayDay3;
-    TextView tempMinDay3;
-    TextView tempMaxDay3;
+    TextView dayDay3, tempMinDay3, tempMaxDay3;
     SimpleDraweeView picDay3;
 
-    TextView dayDay4;
-    TextView tempMinDay4;
-    TextView tempMaxDay4;
+    TextView dayDay4, tempMinDay4, tempMaxDay4;
     SimpleDraweeView picDay4;
 
     ViewPager viewPagerPictures, viewPagerSuggestions;
     PVASuggestions suggestAdapter;
     PVAPictures picturesAdapter;
+    ImageView imageViewPagerEmpty;
 
     LocationManager locationManager = null;
     LocationListener locationListener = null;
@@ -179,6 +168,9 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
                         gs.selectedCity.daily.get(4).icon, null, getPackageName())));
 
         filterText.setText(gs.getFilterNames());
+
+        imageViewPagerEmpty = (ImageView) findViewById(R.id.imageViewPagerEmpty);
+        imageViewPagerEmpty.setImageResource(R.drawable.no_suggestion_image);
     }
 
     // Fonction permettant d'initialiser la geolocalisation
@@ -247,7 +239,16 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         viewPagerPictures = (ViewPager) findViewById(R.id.ViewPagerPictures);
         picturesAdapter = new PVAPictures(this, gs);
         viewPagerPictures.setAdapter(picturesAdapter);
+
+        if(gs.selectedCity.suggestions.isEmpty()) {
+            viewPagerSuggestions.setVisibility(View.GONE);
+            imageViewPagerEmpty.setVisibility(View.VISIBLE);
+        } else {
+            viewPagerSuggestions.setVisibility(View.VISIBLE);
+            imageViewPagerEmpty.setVisibility(View.GONE);
+        }
     }
+
 
     @Override
     public void onClick(View v) {

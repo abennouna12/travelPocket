@@ -34,46 +34,58 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"/>
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12°"
-            android:textSize="60sp"
-            android:fontFamily="sans-serif-bold"
-            android:id="@+id/currentWeather"
-            android:textColor="@color/white"
-            android:textStyle="normal"
-            android:layout_below="@+id/temps"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
 
-        <me.grantland.widget.AutofitTextView
-            android:maxLines="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/temps"
-            android:text="Temps"
-            android:textStyle="normal"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:fontFamily="sans-serif-light"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            <me.grantland.widget.AutofitTextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ville"
+                android:text="Ville"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="normal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp" />
 
-        <me.grantland.widget.AutofitTextView
-            android:paddingTop="25dp"
-            android:maxLines="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ville"
-            android:text="Ville"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textSize="40sp"
-            android:fontFamily="sans-serif-light"
-            android:textStyle="normal"
-            android:layout_below="@+id/retour"
-            android:layout_centerHorizontal="true" />
+            <me.grantland.widget.AutofitTextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/temps"
+                android:text="Temps"
+                android:textStyle="normal"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_below="@+id/ville"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12°"
+                android:textSize="60sp"
+                android:fontFamily="sans-serif-bold"
+                android:id="@+id/currentWeather"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:layout_below="@+id/temps"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"/>
+
+        </RelativeLayout>
 
 
     </RelativeLayout>
@@ -521,6 +533,15 @@
             android:layout_below="@+id/RLSuggestionHeader"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewPagerEmpty"
+            android:layout_below="@+id/RLSuggestionHeader"
+            android:src="@drawable/ic_keyboard_arrow_left40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true" />
 
 
 

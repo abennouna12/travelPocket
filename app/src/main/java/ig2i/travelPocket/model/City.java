@@ -1,5 +1,6 @@
 package ig2i.travelPocket.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class City {
@@ -27,7 +28,8 @@ public class City {
     }*/
 
     public City(){
-        //this.suggestions = new ArrayList<>();
+        this.suggestions = new ArrayList<>();
+        this.pictures = new ArrayList<>();
     }
 
     // Mise a jour des informations d'une ville
