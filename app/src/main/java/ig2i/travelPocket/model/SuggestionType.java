@@ -2,9 +2,7 @@ package ig2i.travelPocket.model;
 
 import java.util.Objects;
 
-/**
- * Created by aBennouna on 11/05/2016.
- */
+
 public class SuggestionType {
 
     public String name;
@@ -51,11 +49,10 @@ public class SuggestionType {
         if (getClass() != obj.getClass()) {
             return false;
         }
+
         final SuggestionType other = (SuggestionType) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        return true;
+        return (!Objects.equals(this.name, other.name));
+
     }
 
 }

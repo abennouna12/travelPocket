@@ -2,4 +2,36 @@
     <string name="app_name">Travel Pocket</string>
     <string name="google_app_id">arctic-signer-123222</string>
     <string name="retour_text"><![CDATA[< Retour]]></string>
+    <string name="ville">Ville</string>
+    <string name="prev">Beau temps</string>
+    <string name="temp">12 °</string>
+    <string name="dash">/</string>
+    <string name="day">Day</string>
+    <string name="suggestions">SUGGESTIONS</string>
+    <string name="filters">Filters</string>
+    <string name="empty_suggest">Aucune suggestion</string>
+    <string name="label_new_filter">Filtre : </string>
+    <string name="hint_new_filter">Nom du filtre</string>
+    <string name="button_save">Enregistrer</string>
+    <string name="empty_city">Aucune ville ajoutée</string>
+    <string name="filters_perso">Filtres personnalisés</string>
+    <string name="filters_Google">Filtres Google</string>
+    <string name="cb">CheckBox</string>
+    <string name="icon_delete_filter">Supprimer le filtre</string>
+    <string name="label_description">Description</string>
+    <string name="label_author">Auteur</string>
+    <string name="label_date">Date</string>
+    <string name="label_suggestion">Suggestion</string>
+    <string name="img_map">Map icon img</string>
+    <string name="img_phone">Phone icon img</string>
+    <string name="img_web">Web icon img</string>
+    <string name="img_distance">Distance icon img</string>
+    <string name="label_distance">15 kms</string>
+    <string name="img_horaire">Horaire icon img</string>
+    <string name="label_open_close">Open</string>
+    <string name="pays">Pays</string>
+    <string name="empty_space"> </string>
+
+
+
 </resources>

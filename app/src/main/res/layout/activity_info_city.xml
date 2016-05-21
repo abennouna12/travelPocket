@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ville"
-                android:text="Ville"
+                android:text="@string/ville"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="40sp"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/temps"
-                android:text="Temps"
+                android:text="@string/prev"
                 android:textStyle="normal"
                 android:singleLine="true"
                 android:textColor="@color/white"
@@ -74,7 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12°"
+                android:text="@string/temp"
                 android:textSize="60sp"
                 android:fontFamily="sans-serif-bold"
                 android:id="@+id/currentWeather"
@@ -119,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMaxToday"
-                android:text="13°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/sepToday"
-                android:text=" / "
+                android:text="@string/dash"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -146,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMinToday"
-                android:text="12°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -160,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayToday"
-                android:text="Day"
+                android:text="@string/day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -192,7 +192,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMaxDay1"
-                android:text="13°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -205,7 +205,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/sepDay1"
-                android:text=" / "
+                android:text="@string/dash"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -219,7 +219,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMinDay1"
-                android:text="12°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -233,7 +233,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayDay1"
-                android:text="Day"
+                android:text="@string/day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -261,13 +261,12 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 
-
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMaxDay2"
-                android:text="13°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -280,7 +279,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/sepDay2"
-                android:text=" / "
+                android:text="@string/dash"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -294,7 +293,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMinDay2"
-                android:text="12°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -308,7 +307,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayDay2"
-                android:text="Day"
+                android:text="@string/day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -336,13 +335,12 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 
-
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMaxDay3"
-                android:text="13°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -355,7 +353,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/sepDay3"
-                android:text=" / "
+                android:text="@string/dash"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -369,7 +367,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMinDay3"
-                android:text="12°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -383,7 +381,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayDay3"
-                android:text="Day"
+                android:text="@string/day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -391,7 +389,6 @@
                 android:layout_above="@+id/picDay3"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true" />
-
 
         </RelativeLayout>
 
@@ -411,13 +408,12 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 
-
             <TextView
                 android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMaxDay4"
-                android:text="13°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -430,7 +426,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/sepDay4"
-                android:text=" / "
+                android:text="@string/dash"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -444,7 +440,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tempMinDay4"
-                android:text="12°"
+                android:text="@string/temp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -458,7 +454,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dayDay4"
-                android:text="Day"
+                android:text="@string/day"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -466,7 +462,6 @@
                 android:layout_above="@+id/picDay4"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true" />
-
 
         </RelativeLayout>
 
@@ -485,7 +480,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SUGGESTIONS"
+                android:text="@string/suggestions"
                 android:textSize="20sp"
                 android:fontFamily="sans-serif-light"
                 android:id="@+id/suggestionText"
@@ -495,15 +490,16 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="15dp"
                 android:paddingTop="5dp"
-                android:paddingBottom="1dp"/>
+                android:paddingBottom="1dp"
+                android:layout_toStartOf="@+id/picFilter" />
 
             <me.grantland.widget.AutofitTextView
                 android:maxLines="1"
                 android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Filters"
-                android:textSize="10sp"
+                android:text="@string/filters"
+                android:textSize="12sp"
                 android:fontFamily="sans-serif-light"
                 android:id="@+id/filterText"
                 android:textColor="@color/grey"
@@ -511,10 +507,11 @@
                 android:layout_below="@+id/suggestionText"
                 android:layout_alignStart="@+id/suggestionText"
                 android:paddingTop="2dp"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+                android:layout_toStartOf="@+id/picFilter" />
 
             <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/picTest"
+                android:id="@+id/picFilter"
                 android:onClick="onClick"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -535,6 +532,7 @@
             android:layout_alignParentBottom="true"/>
 
         <ImageView
+            android:contentDescription="@string/empty_suggest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imageViewPagerEmpty"

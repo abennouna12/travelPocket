@@ -12,7 +12,6 @@ package ig2i.travelPocket;
         import com.google.gson.reflect.TypeToken;
 
         import java.lang.reflect.Type;
-        import java.util.AbstractList;
         import java.util.ArrayList;
         import java.util.HashSet;
         import java.util.List;
@@ -281,7 +280,7 @@ public class GlobalState extends Application{
         for(SuggestionType s:getTypes()) {
             output = output + "," + s.getName();
         }
-        return (output == "") ? "" : output.substring(1);
+        return (output.equals("")) ? "" : output.substring(1);
     }
 
     public String getTypesStringValues (){
@@ -289,12 +288,12 @@ public class GlobalState extends Application{
         for(SuggestionType s:getTypes()) {
             output = output + "|" + s.getValue();
         }
-        return (output == "") ? "all" : output.substring(1);
+        return (output.equals("")) ? "all" : output.substring(1);
     }
 
     public String getFilterNames() {
         String [] names = getTypesStringNames().split(",");
-        if(getTypesStringNames() == "") {
+        if(getTypesStringNames().equals("")) {
             return "Tout les filtres";
         }
         switch (names.length) {

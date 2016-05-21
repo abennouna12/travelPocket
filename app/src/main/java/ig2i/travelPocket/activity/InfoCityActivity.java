@@ -253,7 +253,7 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.picTest:
+            case R.id.picFilter:
                 Intent toSuggestions = new Intent(this, SuggestActivity.class);
                 startActivity(toSuggestions);
                 break;

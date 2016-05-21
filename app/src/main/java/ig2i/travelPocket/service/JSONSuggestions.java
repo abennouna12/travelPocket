@@ -110,11 +110,12 @@ public class JSONSuggestions extends AsyncTask<Void, Void, City> {
                     s.rating = (PlaceResult.has("rating")) ?
                             PlaceResult.getLong("rating") : (float)0;
 
-                    // Si le nom n'est constitué que de chiffres (exemple code postale), en n'affiche
+                    // Si le nom n'est constitué que de chiffres (exemple code postale), on n'affiche
                     // pas la suggestion
                     try
                     {
                         double d = Double.parseDouble(s.placeName);
+                        maxSuggestions = maxSuggestions + (int)Math.round(d) - (int)Math.round(d);
                         maxSuggestions = (maxSuggestions < suggestions.length()) ?
                                 maxSuggestions + 1 : maxSuggestions;
                     }

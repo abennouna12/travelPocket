@@ -1,151 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="170dp"
+    android:background="@drawable/rounded_bg"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <RelativeLayout
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/picture_place_suggest"
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:background="@drawable/rounded_bg"
+            android:scaleType="centerCrop"
+            android:alpha="0.8"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relativeLayoutOpenClose"
+            android:layout_above="@+id/mapIcon"
+            android:layout_alignStart="@+id/mapIcon"
+            android:layout_toStartOf="@+id/relativeLayoutOpenClose"
+            android:gravity="center"
             >
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/picture_place_suggest"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:scaleType="centerCrop"
-                android:alpha="0.8"
-                />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/relativeLayoutOpenClose"
-                android:layout_above="@+id/mapIcon"
-                android:layout_alignStart="@+id/mapIcon"
-                android:layout_toStartOf="@+id/relativeLayoutOpenClose"
-                android:gravity="center"
-                >
-
-                <me.grantland.widget.AutofitTextView
-                    android:maxLines="3"
-                    android:singleLine="false"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/placeName"
-                    android:text="Lieu"
-                    android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:fontFamily="sans-serif-light"
-                    android:textStyle="normal"
-
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="center"
-                    android:textAlignment="textStart"
-                    android:layout_above="@+id/rating" />
-
-                <RatingBar
-                    android:id="@+id/rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:stepSize="0.1"
-                    style="@style/RatingBar"
-
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentStart="true" />
-            </RelativeLayout>
-
-            <RelativeLayout
+            <me.grantland.widget.AutofitTextView
+                android:maxLines="3"
+                android:singleLine="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/relativeLayoutOpenClose"
-                android:background="@drawable/rounded_bg_green"
+                android:id="@+id/placeName"
+                android:text="@string/label_suggestion"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="normal"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:alpha="0.7">
-                <ImageView
-                    android:id="@+id/timeIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_query_builder_24dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:paddingRight="2dp"
-                    android:paddingLeft="2dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/openClose"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:text="open"
-                    android:layout_toEndOf="@+id/timeIcon"
-                    android:paddingRight="4dp"/>
-            </RelativeLayout>
+                android:layout_above="@+id/rating" />
 
-
-
-
-            <ImageView
-                android:layout_marginStart="10dp"
-                android:padding="5dp"
-                android:id="@+id/mapIcon"
+            <RatingBar
+                android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_map"
+                android:stepSize="0.1"
+                style="@style/RatingBar"
+
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativeLayoutOpenClose"
+            android:background="@drawable/rounded_bg_green"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.7">
 
             <ImageView
-                android:padding="5dp"
-                android:id="@+id/phoneIcon"
+                android:contentDescription="@string/img_horaire"
+                android:id="@+id/timeIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_phone"
-                android:layout_alignTop="@+id/webIcon"
-                android:layout_toEndOf="@+id/webIcon" />
-
-            <ImageView
-                android:padding="5dp"
-                android:id="@+id/webIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_web"
-                android:layout_alignTop="@+id/mapIcon"
-                android:layout_toEndOf="@+id/mapIcon" />
-
-            <ImageView
-                android:id="@+id/navIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_navigation_14dp"
-                android:paddingRight="2dp"
-                android:paddingLeft="2dp"
-                android:layout_alignParentBottom="true"
-                android:paddingBottom="12dp"
-                android:layout_toStartOf="@+id/distanceText" />
-
+                android:src="@drawable/ic_query_builder_24dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:paddingEnd="2dp"
+                android:paddingStart="2dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/distanceText"
-                android:textSize="13sp"
+                android:id="@+id/openClose"
+                android:textSize="20sp"
                 android:textColor="@color/white"
-                android:text="15 kms"
-                android:paddingBottom="10dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignEnd="@+id/relativeLayoutOpenClose" />
+                android:text="@string/label_open_close"
+                android:layout_toEndOf="@+id/timeIcon"
+                android:paddingEnd="2dp"
+                android:paddingStart="2dp"/>
 
         </RelativeLayout>
 
+        <ImageView
+            android:layout_marginStart="10dp"
+            android:padding="5dp"
+            android:id="@+id/mapIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_map"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/img_map" />
+
+        <ImageView
+            android:padding="5dp"
+            android:id="@+id/phoneIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_phone"
+            android:layout_alignTop="@+id/webIcon"
+            android:layout_toEndOf="@+id/webIcon"
+            android:contentDescription="@string/img_phone"/>
+
+        <ImageView
+            android:padding="5dp"
+            android:id="@+id/webIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_web"
+            android:layout_alignTop="@+id/mapIcon"
+            android:layout_toEndOf="@+id/mapIcon"
+            android:contentDescription="@string/img_web"/>
+
+        <ImageView
+            android:id="@+id/navIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_navigation_14dp"
+            android:paddingRight="2dp"
+            android:paddingLeft="2dp"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="12dp"
+            android:layout_toStartOf="@+id/distanceText"
+            android:contentDescription="@string/img_distance"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/distanceText"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:text="@string/label_distance"
+            android:paddingBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/relativeLayoutOpenClose" />
 
 </RelativeLayout>

@@ -56,7 +56,7 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
         try {
 
-            int maxPictures = 0;
+            int maxPictures;
 
             String currentWeather = WeatherResult
                     .getJSONObject("currently")
