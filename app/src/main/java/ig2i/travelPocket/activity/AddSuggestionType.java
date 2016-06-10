@@ -17,7 +17,7 @@ import java.util.List;
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.R;
 import ig2i.travelPocket.adapter.SuggestTypeAdapter;
-import ig2i.travelPocket.model.SuggestionType;
+import ig2i.travelPocket.model.FilterType;
 
 public class AddSuggestionType extends Activity implements View.OnClickListener {
 
@@ -27,7 +27,7 @@ public class AddSuggestionType extends Activity implements View.OnClickListener 
     SuggestTypeAdapter adapter;
     public GlobalState gs;
     Gson gson;
-    List<SuggestionType> selectedTypes;
+    List<FilterType> selectedTypes;
 
 
     @Override
@@ -54,7 +54,7 @@ public class AddSuggestionType extends Activity implements View.OnClickListener 
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position,
                                     long arg3) {
-                SuggestionType suggest = (SuggestionType) parent.getItemAtPosition(position);
+                FilterType suggest = (FilterType) parent.getItemAtPosition(position);
                 suggest.checked = !(suggest.getChecked());
                 majAdapter();
 
@@ -77,7 +77,7 @@ public class AddSuggestionType extends Activity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.AddNewSuggestButton:
-                SuggestionType newSuggest = new SuggestionType();
+                FilterType newSuggest = new FilterType();
                 newSuggest.checked = true;
                 newSuggest.name = et.getText().toString();
                 if(gs.UserSuggestions.contains(newSuggest)) {
@@ -104,7 +104,9 @@ public class AddSuggestionType extends Activity implements View.OnClickListener 
     }
 
 
-
+    /**
+     * Fonction pour mettre à jour l'adapter
+     */
     private void majAdapter() {
         adapter.notifyDataSetChanged();
     }

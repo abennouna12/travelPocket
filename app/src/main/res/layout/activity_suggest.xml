@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="350dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".activity.SuggestActivity">
 
@@ -74,7 +74,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/RLGoogleTitle"
             android:layout_alignParentEnd="true">
-
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/SelectAllSuggests"
+                android:onClick="onClick"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +95,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="15dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"/>
+                android:paddingBottom="10dp"
+                android:layout_toStartOf="@+id/SelectAllSuggests" />
 
         </RelativeLayout>
 
@@ -101,6 +109,20 @@
             android:layout_below="@+id/RLGoogleTitle" />
 
 
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayoutGoogle"
+        android:layout_alignParentStart="true">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/saveFiltersButton"
+            android:onClick="onClick"
+            android:text="@string/Ok"/>
     </RelativeLayout>
 
 

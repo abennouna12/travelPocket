@@ -102,8 +102,7 @@
             android:layout_width="70dp"
             android:layout_height="120dp"
             android:id="@+id/relativeLayoutToday"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+            android:layout_centerVertical="true">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/picToday"
@@ -174,7 +173,7 @@
             android:layout_width="70dp"
             android:layout_height="120dp"
             android:id="@+id/relativeLayoutDay1"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/relativeLayoutToday">
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -249,7 +248,7 @@
             android:layout_width="70dp"
             android:layout_height="120dp"
             android:id="@+id/relativeLayoutDay2"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/relativeLayoutDay1">
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -396,7 +395,7 @@
             android:layout_width="70dp"
             android:layout_height="120dp"
             android:id="@+id/relativeLayoutDay4"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/relativeLayoutDay3">
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -482,15 +481,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/suggestions"
                 android:textSize="20sp"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:id="@+id/suggestionText"
                 android:textColor="@color/grey"
                 android:textStyle="normal"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="15dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="1dp"
                 android:layout_toStartOf="@+id/picFilter" />
 
             <me.grantland.widget.AutofitTextView
@@ -500,14 +499,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/filters"
                 android:textSize="12sp"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:id="@+id/filterText"
                 android:textColor="@color/grey"
                 android:textStyle="italic"
                 android:layout_below="@+id/suggestionText"
                 android:layout_alignStart="@+id/suggestionText"
-                android:paddingTop="2dp"
-                android:paddingBottom="5dp"
+                android:layout_marginTop="1dp"
                 android:layout_toStartOf="@+id/picFilter" />
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -519,29 +517,39 @@
                 fresco:backgroundImage="@drawable/ic_filter"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="15dp" />
+                android:layout_marginEnd="15dp"/>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/RLSuggestionHeader">
 
-        <android.support.v4.view.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ViewPagerSuggestions"
-            android:layout_below="@+id/RLSuggestionHeader"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"/>
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ViewPagerSuggestions"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="15dp"/>
 
-        <ImageView
-            android:contentDescription="@string/empty_suggest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageViewPagerEmpty"
-            android:layout_below="@+id/RLSuggestionHeader"
-            android:src="@drawable/ic_keyboard_arrow_left40dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true" />
+            <ImageView
+                android:contentDescription="@string/empty_suggest"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageViewPagerEmpty"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
 
+            <pl.droidsonroids.gif.GifImageView
+                android:contentDescription="@string/loader"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/loaderSuggestion"/>
 
+</RelativeLayout>
 
     </RelativeLayout>
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -13,12 +14,13 @@ import com.google.gson.Gson;
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.R;
 import ig2i.travelPocket.adapter.SuggestTypeAdapter;
-import ig2i.travelPocket.model.SuggestionType;
+import ig2i.travelPocket.model.FilterType;
 
 public class SuggestActivity extends Activity implements View.OnClickListener {
 
     ListView lvGoogle,lvUser;
     SuggestTypeAdapter adapterGoogle, adapterUser;
+    CheckBox SelectAllSuggests;
     public GlobalState gs;
     Gson gson;
 
@@ -39,12 +41,15 @@ public class SuggestActivity extends Activity implements View.OnClickListener {
         adapterUser = new SuggestTypeAdapter(gs, this, gs.UserSuggestions,true);
         lvUser.setAdapter(adapterUser);
 
+        SelectAllSuggests = (CheckBox) findViewById(R.id.SelectAllSuggests);
+        SelectAllSuggests.setChecked(gs.isAllSuggestionsChecked());
+
         lvGoogle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position,
                                     long arg3) {
 
-                SuggestionType suggest = (SuggestionType) parent.getItemAtPosition(position);
+                FilterType suggest = (FilterType) parent.getItemAtPosition(position);
                 suggest.checked = !(suggest.getChecked());
 
                 majAdapter();
@@ -57,7 +62,7 @@ public class SuggestActivity extends Activity implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View v, int position,
                                     long arg3) {
 
-                SuggestionType suggest = (SuggestionType) parent.getItemAtPosition(position);
+                FilterType suggest = (FilterType) parent.getItemAtPosition(position);
                 suggest.checked = !(suggest.getChecked());
                 majAdapter();
                 gs.updatePrefsSuggestions();
@@ -67,9 +72,13 @@ public class SuggestActivity extends Activity implements View.OnClickListener {
 
     }
 
+    /**
+     * Fonction permettant de mettre à jour les adapters
+     */
     private void majAdapter(){
         adapterGoogle.notifyDataSetChanged();
         adapterUser.notifyDataSetChanged();
+        SelectAllSuggests.setChecked(gs.isAllSuggestionsChecked());
     }
 
     @Override
@@ -80,13 +89,17 @@ public class SuggestActivity extends Activity implements View.OnClickListener {
                 Intent newSuggest = new Intent(this, AddSuggestionType.class);
                 startActivity(newSuggest);
                 break;
+            case R.id.SelectAllSuggests :
+                for(FilterType s:gs.GoogleSuggestions) {
+                    s.checked = SelectAllSuggests.isChecked();
+                }
+                gs.updatePrefsSuggestions();
+                majAdapter();
+                break;
+            case R.id.saveFiltersButton :
+                this.finish();
+                break;
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-       /* Intent toInfoCity = new Intent(this, InfoCityActivity.class);
-        startActivity(toInfoCity);*/
-    }
 }

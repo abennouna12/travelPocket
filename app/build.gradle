@@ -31,5 +31,5 @@ dependencies {
     compile 'me.grantland:autofittextview:0.2.+'
     compile 'com.github.brnunes:swipeablerecyclerview:1.0.2'
     compile 'com.google.code.gson:gson:2.6.2'
-
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.16'
 }

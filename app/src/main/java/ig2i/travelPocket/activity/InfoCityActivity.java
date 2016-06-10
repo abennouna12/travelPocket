@@ -27,6 +27,7 @@ import ig2i.travelPocket.adapter.PVASuggestions;
 import ig2i.travelPocket.model.City;
 import ig2i.travelPocket.service.JSONSuggestions;
 import me.grantland.widget.AutofitTextView;
+import pl.droidsonroids.gif.GifImageView;
 
 public class InfoCityActivity extends Activity implements View.OnClickListener {
 
@@ -52,7 +53,8 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     ViewPager viewPagerPictures, viewPagerSuggestions;
     PVASuggestions suggestAdapter;
     PVAPictures picturesAdapter;
-    ImageView imageViewPagerEmpty;
+    public ImageView imageViewPagerEmpty;
+    public GifImageView loaderSuggestion;
 
     LocationManager locationManager = null;
     LocationListener locationListener = null;
@@ -79,12 +81,16 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
     }
 
 
-    // Fonction permettant de recuperer les suggestions
+    /**
+     * Fonction permettant de recuperer les suggestions
+     */
     public void setSuggestions() {
         getJSONSuggestions();
     }
 
-    // Fonction permettant de recuperer les suggestions a l'aide de la classe JSONParser
+    /**
+     * Fonction permettant de recuperer les suggestions a l'aide de la classe JSONParser
+     */
     public void getJSONSuggestions() {
         if (gs.isConnected()) {
             JSONSuggestions w = new JSONSuggestions(this);
@@ -94,8 +100,10 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    // Cette fonction permet d'initialiset et de donner une valeur a tout les textviews et images
-    // de la vue
+    /**
+     * Cette fonction permet d'initialiset et de donner une valeur a tout les textviews et images
+     * de la vue
+     */
     public void setView() {
 
         temps = (TextView) findViewById(R.id.temps);
@@ -171,9 +179,15 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
         imageViewPagerEmpty = (ImageView) findViewById(R.id.imageViewPagerEmpty);
         imageViewPagerEmpty.setImageResource(R.drawable.no_suggestion_image);
+
+        loaderSuggestion = (GifImageView) findViewById(R.id.loaderSuggestion);
+        loaderSuggestion.setImageResource(R.drawable.waiting);
+
     }
 
-    // Fonction permettant d'initialiser la geolocalisation
+    /**
+     * Fonction permettant d'initialiser la geolocalisation
+     */
     public void setLocation() {
 
 
@@ -187,7 +201,7 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
             != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
-                return;
+            return;
         }
         locationManager.requestLocationUpdates(LocationManager
                 .GPS_PROVIDER, 5000, 100, locationListener);
@@ -195,7 +209,9 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
     }
 
-    // Classe de LocationListener permettant de mettre a jour la position actuelle et l'enregistrer
+    /**
+     * Classe de LocationListener permettant de mettre a jour la position actuelle et l'enregistrer
+     */
     private class MyLocationListener implements LocationListener {
 
         @Override
@@ -220,26 +236,41 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
         public void onProviderDisabled(String provider) {}
     }
 
-    // Fonction executée après avoir recuperer les suggestions (en JSON), cette fonction permet de
-    // charger les suggestions
+    /**
+     * Fonction executée après avoir récupére les suggestions (en JSON), cette fonction permet de
+     * charger les suggestions
+     * @param c City (Ville selectionnée contenant les suggestions)
+     */
     public void addSuggestions (City c) {
         gs.selectedCity = c;
         setAdapter();
         // La liste des suggestions est ensuite enregistrée dans les shared preferences
         SharedPreferences.Editor editor = gs.prefs.edit();
         editor.apply();
+        handleIfNoSuggestion();
     }
 
-    // Fonction permettant d'initialiser le recyclerview
+
+    /**
+     * Fonction permettant d'initialiser les adapters (Viewpagers)
+     */
     public void setAdapter() {
         viewPagerSuggestions = (ViewPager) findViewById(R.id.ViewPagerSuggestions);
         suggestAdapter = new PVASuggestions(this, gs);
         viewPagerSuggestions.setAdapter(suggestAdapter);
+        suggestAdapter.notifyDataSetChanged();
 
         viewPagerPictures = (ViewPager) findViewById(R.id.ViewPagerPictures);
         picturesAdapter = new PVAPictures(this, gs);
         viewPagerPictures.setAdapter(picturesAdapter);
 
+    }
+
+    /**
+     * Fonction permettant de gerer si il n'y a pas de suggestion
+     */
+    public void handleIfNoSuggestion() {
+        loaderSuggestion.setVisibility(View.GONE);
         if(gs.selectedCity.suggestions.isEmpty()) {
             viewPagerSuggestions.setVisibility(View.GONE);
             imageViewPagerEmpty.setVisibility(View.VISIBLE);
@@ -265,6 +296,8 @@ public class InfoCityActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onResume() {
+        viewPagerSuggestions.setVisibility(View.GONE);
+        loaderSuggestion.setVisibility(View.VISIBLE);
         super.onResume();
         setSuggestions();
         filterText.setText(gs.getFilterNames());

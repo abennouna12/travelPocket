@@ -13,15 +13,15 @@ import java.util.List;
 
 import ig2i.travelPocket.GlobalState;
 import ig2i.travelPocket.R;
-import ig2i.travelPocket.model.SuggestionType;
+import ig2i.travelPocket.model.FilterType;
 
 
-public class SuggestTypeAdapter extends ArrayAdapter<SuggestionType>{
-    List<SuggestionType> types = null;
+public class SuggestTypeAdapter extends ArrayAdapter<FilterType>{
+    List<FilterType> types = null;
     Context context;
     GlobalState gs;
     Boolean isDeletable;
-    public SuggestTypeAdapter(GlobalState gs,Context context, List<SuggestionType> resource, Boolean isDeletable) {
+    public SuggestTypeAdapter(GlobalState gs,Context context, List<FilterType> resource, Boolean isDeletable) {
         super(context,R.layout.filter_item,resource);
         this.context = context;
         this.types = resource;

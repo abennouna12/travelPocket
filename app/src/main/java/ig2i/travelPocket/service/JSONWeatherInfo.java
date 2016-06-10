@@ -1,6 +1,7 @@
 package ig2i.travelPocket.service;
 
 import android.os.AsyncTask;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,13 +12,14 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ig2i.travelPocket.GlobalState;
+import ig2i.travelPocket.R;
 import ig2i.travelPocket.activity.MainActivity;
 import ig2i.travelPocket.model.City;
 import ig2i.travelPocket.model.PictureInfo;
 import ig2i.travelPocket.model.WeatherDetail;
 
 
-public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
+public class JSONWeatherInfo extends AsyncTask<Void, Integer, City> {
 
     GlobalState gs;
     String latlong;
@@ -31,7 +33,8 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
     City result;
     String pays;
 
-    public JSONWeatherInfo(GlobalState gs, String param, String latlong, MainActivity obj, String name, String pays) {
+    public JSONWeatherInfo(GlobalState gs, String param, String latlong, MainActivity obj,
+                           String name, String pays) {
         this.param = param;
         this.latlong = latlong;
         this.obj = obj;
@@ -42,8 +45,15 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
     }
 
     @Override
+    protected void onProgressUpdate(Integer... values) {
+        obj.loaderCity.setVisibility(View.VISIBLE);
+        obj.pictureNoCity.setVisibility(View.GONE);
+    }
+
+    @Override
     protected City doInBackground(Void... params) {
 
+        publishProgress();
 
         String WeatherURL = "https://api.forecast.io/forecast/33e15e6da3e6f7c501e82e70461c5163/" +
                 latlong +
@@ -105,10 +115,12 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
                 }
 
                 Double temperatureMin = Double.valueOf(day.getString("temperatureMin"));
-                String weatherMin = Integer.toString((int) Math.round((temperatureMin * 1 / 1))) + "°";
+                String weatherMin = Integer.toString((int) Math.round((temperatureMin * 1 / 1)))
+                        + "°";
 
                 Double temperatureMax = Double.valueOf(day.getString("temperatureMax"));
-                String weatherMax = Integer.toString((int) Math.round((temperatureMax * 1 / 1))) + "°";
+                String weatherMax = Integer.toString((int) Math.round((temperatureMax * 1 / 1)))
+                        + "°";
 
                 wd.tempMin = weatherMin;
                 wd.tempMax = weatherMax;
@@ -117,7 +129,8 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
             if(param.equals("add") || gs.isPhotosUpdatable()) {
 
-                String FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
+                String FlickrURL =
+                        "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
                         "group_id=1463451%40N25&view_all=1" +
                         "&lat=" + latlong.split(",")[0] +
                         "&lon=" + latlong.split(",")[1] +
@@ -159,16 +172,21 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
                         PictureInfo picture = new PictureInfo();
 
-                        String photoDetail = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo" +
-                                "&photo_id=" + id +
-                                "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027&format=json";
+                        String photoDetail =
+                                "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo"
+                                + "&photo_id=" + id
+                                + "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027&format=json";
 
 
-                        JSONObject pictureDetails = FlickrParser.getJSONFromUrlFlickr(photoDetail).getJSONObject("photo");
+                        JSONObject pictureDetails = FlickrParser.getJSONFromUrlFlickr(photoDetail)
+                                .getJSONObject("photo");
 
-                        picture.author = pictureDetails.getJSONObject("owner").getString("username");
-                        picture.description = pictureDetails.getJSONObject("description").getString("_content");
-                        picture.takenOn = new Date(pictureDetails.getJSONObject("dates").getLong("posted")*1000);
+                        picture.author = pictureDetails.getJSONObject("owner")
+                                .getString("username");
+                        picture.description = pictureDetails.getJSONObject("description")
+                                .getString("_content");
+                        picture.takenOn = new Date(pictureDetails.getJSONObject("dates")
+                                .getLong("posted")*1000);
                         picture.src = "https://farm" + farm + ".staticflickr.com/"
                                 + server + "/" + id + "_" + secret + ".jpg";
 
@@ -179,7 +197,8 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
                 } else {
 
-                     FlickrURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
+                     FlickrURL =
+                             "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
                             "&lat=" + latlong.split(",")[0] +
                             "&lon=" + latlong.split(",")[1] +
                             "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027" +
@@ -207,27 +226,32 @@ public class JSONWeatherInfo extends AsyncTask<Void, Void, City> {
 
                         PictureInfo picture = new PictureInfo();
 
-                        String photoDetail = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo" +
-                                "&photo_id=" + id +
-                                "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027&format=json";
+                        String photoDetail =
+                                "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo"
+                                + "&photo_id=" + id
+                                + "&api_key=7c3be4ef9c1bc1c2a8c55609c72e2027&format=json";
 
 
-                        JSONObject pictureDetails = FlickrParser.getJSONFromUrlFlickr(photoDetail).getJSONObject("photo");
+                        JSONObject pictureDetails = FlickrParser
+                                .getJSONFromUrlFlickr(photoDetail).getJSONObject("photo");
 
                         if(pictureDetails.getJSONObject("owner").has("username")) {
-                            picture.author = pictureDetails.getJSONObject("owner").getString("username");
+                            picture.author = pictureDetails.getJSONObject("owner")
+                                    .getString("username");
                         } else {
                             picture.author = "";
                         }
 
                         if(pictureDetails.getJSONObject("description").has("_content")) {
-                            picture.description = pictureDetails.getJSONObject("description").getString("_content");
+                            picture.description = pictureDetails.getJSONObject("description")
+                                    .getString("_content");
                         } else {
                             picture.description = "";
                         }
 
                         if(pictureDetails.getJSONObject("dates").has("posted")) {
-                            picture.takenOn = new Date(pictureDetails.getJSONObject("dates").getLong("posted")*1000);
+                            picture.takenOn = new Date(pictureDetails.getJSONObject("dates")
+                                    .getLong("posted")*1000);
                         } else {
                             picture.takenOn = null;
                         }

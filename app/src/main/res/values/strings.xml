@@ -31,6 +31,8 @@
     <string name="label_open_close">Open</string>
     <string name="pays">Pays</string>
     <string name="empty_space"> </string>
+    <string name="Ok">Ok</string>
+    <string name="loader">loader</string>
 
 
 

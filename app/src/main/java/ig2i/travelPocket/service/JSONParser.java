@@ -18,8 +18,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class JSONParser {
 
-    // Classe permettant de parser un JSON
-
     JSONObject JSONresponseText;
     int timeout1 = 1000*2;
     int timeout2 = 1000*2;
@@ -28,7 +26,12 @@ public class JSONParser {
 
     }
 
-    // Fonction de récupération d'un flux JSON formatté normalement
+
+    /**
+     * Fonction de récupération d'un flux JSON formatté normalement
+     * @param requesturl URL de l'API Flickr
+     * @return Objet JSON
+     */
     public JSONObject getJSONFromUrl(String requesturl) {
 
         // Making HTTP request
@@ -70,7 +73,6 @@ public class JSONParser {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        Log.d("JSON RESPONSE = ", JSONresponseText.toString());
         return JSONresponseText;
 
     }
@@ -79,6 +81,13 @@ public class JSONParser {
     // Fonction de récupération du flux JSON de flickr
     // Il ne'est pas reconnu comme un flux JSON
     // il faudra faire des modifications avant de le parser
+
+    /**
+     * Fonction de récupération du flux JSON de flickr Il ne'est pas reconnu comme un flux JSON
+     * il faudra faire des modifications avant de le parser
+     * @param requesturl URL de l'API Flickr
+     * @return Objet JSON
+     */
     public JSONObject getJSONFromUrlFlickr(String requesturl) {
 
 
@@ -121,7 +130,6 @@ public class JSONParser {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        Log.d("JSON RESPONSE = ", JSONresponseText.toString());
         return JSONresponseText;
 
     }

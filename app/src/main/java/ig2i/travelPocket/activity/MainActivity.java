@@ -26,6 +26,7 @@ import ig2i.travelPocket.R;
 import ig2i.travelPocket.adapter.RVAWeather;
 import ig2i.travelPocket.model.City;
 import ig2i.travelPocket.service.JSONWeatherInfo;
+import pl.droidsonroids.gif.GifImageView;
 
 public class MainActivity extends Activity {
 
@@ -33,7 +34,8 @@ public class MainActivity extends Activity {
 
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     RecyclerView rvCities;
-    ImageView pictureNoCity;
+    public ImageView pictureNoCity;
+    public GifImageView loaderCity;
     String city;
     String pays;
     String latlong;
@@ -53,6 +55,10 @@ public class MainActivity extends Activity {
 
         pictureNoCity = (ImageView) findViewById(R.id.pictureNoCity);
         pictureNoCity.setImageResource(R.drawable.no_weather_image);
+
+        loaderCity = (GifImageView) findViewById(R.id.loaderCity);
+        loaderCity.setVisibility(View.GONE);
+        loaderCity.setImageResource(R.drawable.waiting);
 
         rvCities = (RecyclerView) findViewById(R.id.rvCities);
 
@@ -86,7 +92,12 @@ public class MainActivity extends Activity {
         super.onStart();
     }
 
+    /**
+     * Fonction permettant d'afficher ou non l'image (Veuillez ajouter une ville) si jamais il
+     * n'y a pas de ville ajoutée
+     */
     public void handleIfRecylerIsEmpty(){
+        loaderCity.setVisibility(View.GONE);
         if(gs.cities.isEmpty()) {
             rvCities.setVisibility(View.GONE);
             pictureNoCity.setVisibility(View.VISIBLE);
@@ -96,20 +107,26 @@ public class MainActivity extends Activity {
         }
     }
 
-    // Fonction pour aller a l'activité InfoCityActivity
+    /**
+     * Fonction pour aller a l'activité InfoCityActivity
+     */
     private void goToInfoCity(){
         Intent toInfoCity = new Intent(this, InfoCityActivity.class);
         startActivity(toInfoCity);
     }
 
-    // Fonction pour initialiser le recyclerview adapter
+    /**
+     * Fonction pour initialiser le recyclerview adapter
+     */
     private void initializeAdapter(){
         adapter = new RVAWeather(gs.cities);
         rvCities.setAdapter(adapter);
         handleIfRecylerIsEmpty();
     }
 
-    // Fonction pour mettre a jour l'adapter
+    /**
+     * Fonction pour mettre a jour l'adapter
+     */
     private void majAdapter(){
         adapter.notifyDataSetChanged();
         handleIfRecylerIsEmpty();
@@ -155,7 +172,9 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Update shared preferences
+    /**
+     * Update shared preferences
+     */
     public void updatePrefs() {
         SharedPreferences.Editor editor = gs.prefs.edit();
         editor.putString("cities", gson.toJson(gs.cities));
@@ -163,7 +182,10 @@ public class MainActivity extends Activity {
         editor.apply();
     }
 
-    // Fonction executee lors de l'ajout d'une ville
+    /**
+     * Fonction executee lors de l'ajout d'une ville
+     * @param result La ville récuperée après traitement async
+     */
     public void setWeather(City result){
         gs.cities.add(result);
         gs.latlongs.add(latlong);
@@ -182,6 +204,7 @@ public class MainActivity extends Activity {
                 String[] address = place.getAddress().toString().split(",");
                 pays = address[ address.length - 1 ].toUpperCase().substring(1);
                 if(!(gs.latlongs.contains(latlong))) {
+                    loaderCity.setVisibility(View.VISIBLE);
                     JSONWeatherInfo w = new JSONWeatherInfo(gs,"add",latlong, this, city, pays);
                     w.execute();
                 } else {
@@ -192,13 +215,17 @@ public class MainActivity extends Activity {
         }
     }
 
-    // Add a city and update adapter
+    /**
+     * Ajouter une ville et mettre à jour l'adapter
+     */
     public void addCity() {
-        adapter.notifyItemInserted(gs.cities.size()-1);
+        adapter.notifyItemInserted(gs.cities.size() - 1);
         majAdapter();
     }
 
-    // Swipe touch listener to delete a city while swipping left
+    /**
+     * Swipe touch listener to delete a city while swiping left
+     */
     public void swipeTouchListener()
     {
         SwipeableRecyclerViewTouchListener swipeTouchListener =
@@ -235,7 +262,10 @@ public class MainActivity extends Activity {
         rvCities.addOnItemTouchListener(swipeTouchListener);
     }
 
-    // Fonction pour mettre a jour une ville
+    /**
+     * Fonction pour mettre a jour une ville
+     * @param c Ville a mettre a jour
+     */
     public void updateCity(City c) {
         latlong = c.latitude + "," + c.longitude;
         city = c.name;
@@ -244,7 +274,10 @@ public class MainActivity extends Activity {
         w.execute();
     }
 
-    // Fonction appellee apres avoir recuperer la nouvelle ville
+    /**
+     * Fonction appellée après avoir recuperé la nouvelle ville
+     * @param result Ville a mettre a jour
+     */
     public void update (City result) {
         City old = new City();
         for(City c : gs.cities) {
@@ -256,7 +289,9 @@ public class MainActivity extends Activity {
         majAdapter();
     }
 
-    // Fonction permettant de mettre a jour toutes les villes
+    /**
+     * Fonction permettant de mettre a jour toutes les villes
+     */
     public void updateEverything(){
 
         if (gs.isConnected()) {

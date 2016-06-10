@@ -62,7 +62,8 @@ public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> 
 
     @Override
     public CityViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.weather_item, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.weather_item, viewGroup, false);
         return new CityViewHolder(v);
     }
 
@@ -71,8 +72,12 @@ public class RVAWeather extends RecyclerView.Adapter<RVAWeather.CityViewHolder> 
         cityViewHolder.name.setText(cities.get(i).name);
         cityViewHolder.pays.setText(cities.get(i).pays);
         cityViewHolder.currentWeather.setText(cities.get(i).currentWeather);
-        Uri uri = Uri.parse(cities.get(i).pictures.get(0).src);
-        cityViewHolder.picture.setImageURI(uri);
+        if(cities.get(i).pictures.size() == 0) {
+            cityViewHolder.picture.setImageResource(R.drawable.default_image);
+        } else {
+            Uri uri = Uri.parse(cities.get(i).pictures.get(0).src);
+            cityViewHolder.picture.setImageURI(uri);
+        }
     }
 
     @Override
